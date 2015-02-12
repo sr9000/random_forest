@@ -1,0 +1,78 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Header Files\interface">
+      <UniqueIdentifier>{f74e3f9b-d478-4057-b330-9ade97e8f829}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\class">
+      <UniqueIdentifier>{79e4ce67-7997-454a-94e9-abbd93175c7d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\struct">
+      <UniqueIdentifier>{0a871557-6e60-444e-bd1b-7097b216e77f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\class">
+      <UniqueIdentifier>{4fa70a07-ea89-4b3f-95e5-d95bea1f2fc1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\interface">
+      <UniqueIdentifier>{7f1c2598-b5e8-47c4-a3d7-db45e2ac8483}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\struct">
+      <UniqueIdentifier>{cca510eb-6b0e-4e2b-8cfe-ef3585ebf490}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="compound_id.cpp">
+      <Filter>Source Files\struct</Filter>
+    </ClCompile>
+    <ClCompile Include="compound_record.cpp">
+      <Filter>Source Files\struct</Filter>
+    </ClCompile>
+    <ClCompile Include="CompoundReaderFactory.cpp">
+      <Filter>Source Files\class</Filter>
+    </ClCompile>
+    <ClCompile Include="TextCompoundReader.cpp">
+      <Filter>Source Files\class</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="ICompoundReader.h">
+      <Filter>Header Files\interface</Filter>
+    </ClInclude>
+    <ClInclude Include="CompoundReaderFactory.h">
+      <Filter>Header Files\class</Filter>
+    </ClInclude>
+    <ClInclude Include="TextCompoundIterator.h">
+      <Filter>Header Files\class</Filter>
+    </ClInclude>
+    <ClInclude Include="TextCompoundReader.h">
+      <Filter>Header Files\class</Filter>
+    </ClInclude>
+    <ClInclude Include="CompoundId.h">
+      <Filter>Header Files\struct</Filter>
+    </ClInclude>
+    <ClInclude Include="CompoundRecord.h">
+      <Filter>Header Files\struct</Filter>
+    </ClInclude>
+    <ClInclude Include="ICompoundIterator.h">
+      <Filter>Header Files\interface</Filter>
+    </ClInclude>
+    <ClInclude Include="precompile_header.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

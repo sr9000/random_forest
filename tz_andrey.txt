@@ -1,0 +1,40 @@
+standart
+имена классов - ClassName
+имена переменных - variableName
+имена членов - _memberVariable
+имена тайпдефов my_typedef_name
+[5:56:25 PM] Yano (Arcadia): ссылки и указатели - ClassName& var, ClassName* var
+[5:56:33 PM] Yano (Arcadia): за правую нотацию - кара
+за namespace my_namespace
+{
+}
+
+в cpp файле - паяльник
+[5:59:23 PM] Yano (Arcadia): алиасы желательно не юзать.
+юзинги только для std и твоих либ.
+буст пишем целиком
+[5:59:40 PM] Yano (Arcadia): сокращение скобок в for и if допускается в редких случаях когда всё точно понятно
+
+a) public/protected/private
+
+1)typedef
+1.5) fields
+2)constr/destr
+3)method
+
+tz 1
+чтение коллекции
+
+tz 2
+предлагаю тебе реализовать свой итератор через средства буста
+[5:48:21 PM] Yano (Arcadia): а если быть точнее то через boost::iterator_facade - константный итератор
+[5:49:49 PM] Yano (Arcadia): + к нему объект Reader который умеет возвращать begin, end и boost::any_range Из этих итераторов
+заодно поюзать этот итератор рендж в boost_foreach (ты же будешь читать этот файл)
+
+tz 3
+и плюс к этому запилить интерфейс для reader`а с основными методами
+и factory класс который умеет создавать инстанс нашего ридера и возвращать его как указатель на интерфейс
+в factory метод типа create который принимает енум и на его основе создаёт различные типы ридеров (у нас пока будет один текстовый)
+
+tz 4
+macros exception (file, line, error text)
