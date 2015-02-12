@@ -1,19 +1,19 @@
-standart
+﻿standart
 имена классов - ClassName
 имена переменных - variableName
 имена членов - _memberVariable
 имена тайпдефов my_typedef_name
-[5:56:25 PM] Yano (Arcadia): ссылки и указатели - ClassName& var, ClassName* var
-[5:56:33 PM] Yano (Arcadia): за правую нотацию - кара
+ссылки и указатели - ClassName& var, ClassName* var
+за правую нотацию - кара
 за namespace my_namespace
 {
 }
 
 в cpp файле - паяльник
-[5:59:23 PM] Yano (Arcadia): алиасы желательно не юзать.
+алиасы желательно не юзать.
 юзинги только для std и твоих либ.
 буст пишем целиком
-[5:59:40 PM] Yano (Arcadia): сокращение скобок в for и if допускается в редких случаях когда всё точно понятно
+сокращение скобок в for и if допускается в редких случаях когда всё точно понятно
 
 a) public/protected/private
 
@@ -27,8 +27,8 @@ tz 1
 
 tz 2
 предлагаю тебе реализовать свой итератор через средства буста
-[5:48:21 PM] Yano (Arcadia): а если быть точнее то через boost::iterator_facade - константный итератор
-[5:49:49 PM] Yano (Arcadia): + к нему объект Reader который умеет возвращать begin, end и boost::any_range Из этих итераторов
+ а если быть точнее то через boost::iterator_facade - константный итератор
+ + к нему объект Reader который умеет возвращать begin, end и boost::any_range Из этих итераторов
 заодно поюзать этот итератор рендж в boost_foreach (ты же будешь читать этот файл)
 
 tz 3
