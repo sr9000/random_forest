@@ -38,6 +38,6 @@ public:
 class CompoundReaderFactory
 {
 public:
-   CompoundRecordReaderPtr createCompoundReader(const CompoundReaderCreationConfig& config);
+   static CompoundRecordReaderPtr createCompoundReader(const CompoundReaderCreationConfig& config);
    
 };

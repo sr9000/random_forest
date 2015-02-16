@@ -11,9 +11,14 @@ TextCompoundIterator::TextCompoundIterator(const TextCompoundIterator& other)
 {
 	switch (other._state)
 	{
-	case TextCompoundIteratorState::Begin:
 	case TextCompoundIteratorState::Finish:
 		_path = other._path;
+      _state = TextCompoundIteratorState::Finish;
+      break;
+   case TextCompoundIteratorState::Begin:
+      _path = other._path;
+      _state = TextCompoundIteratorState::Begin;
+      init();
 		break;
 	case TextCompoundIteratorState::Proceed:
 		throw std::exception();
@@ -30,8 +35,8 @@ TextCompoundIterator::TextCompoundIterator(const TextCompoundIterator& other)
 void fillCompoundRecord(CompoundRecord& rec, const std::string& str)
 {
 	std::vector<std::string> partsOfStringCompoundRecord;
-   boost::split(partsOfStringCompoundRecord, str, boost::is_any_of(" "));
-   partsOfStringCompoundRecord.pop_back();
+   boost::split(partsOfStringCompoundRecord, str, boost::is_any_of(","));
+   //partsOfStringCompoundRecord.pop_back();
 
    rec._compoundId = partsOfStringCompoundRecord[0];
    partsOfStringCompoundRecord.erase(partsOfStringCompoundRecord.begin());
