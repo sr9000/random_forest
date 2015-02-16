@@ -2,6 +2,15 @@
 
 #include "CompoundRecord.h"
 
+CompoundRecord::CompoundRecord()
+{}
+
+CompoundRecord::CompoundRecord(const CompoundRecord& other)
+{
+	_compoundId = other._compoundId;
+	_features = other._features;
+}
+
 /*CompoundRecord::CompoundRecord(const std::string stringCompoundRecord)
 {
    std::vector <std::string> partsOfStringCompoundRecord;

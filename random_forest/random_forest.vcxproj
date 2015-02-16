@@ -81,9 +81,10 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="CompoundReaderFactory.cpp" />
-    <ClCompile Include="compound_id.cpp" />
-    <ClCompile Include="compound_record.cpp" />
+    <ClCompile Include="CompoundId.cpp" />
+    <ClCompile Include="CompoundRecord.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="TextCompoundIterator.cpp" />
     <ClCompile Include="TextCompoundReader.cpp" />
   </ItemGroup>
   <ItemGroup>

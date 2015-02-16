@@ -36,16 +36,19 @@
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="compound_id.cpp">
-      <Filter>Source Files\struct</Filter>
-    </ClCompile>
-    <ClCompile Include="compound_record.cpp">
-      <Filter>Source Files\struct</Filter>
-    </ClCompile>
     <ClCompile Include="CompoundReaderFactory.cpp">
       <Filter>Source Files\class</Filter>
     </ClCompile>
     <ClCompile Include="TextCompoundReader.cpp">
+      <Filter>Source Files\class</Filter>
+    </ClCompile>
+    <ClCompile Include="CompoundId.cpp">
+      <Filter>Source Files\struct</Filter>
+    </ClCompile>
+    <ClCompile Include="CompoundRecord.cpp">
+      <Filter>Source Files\struct</Filter>
+    </ClCompile>
+    <ClCompile Include="TextCompoundIterator.cpp">
       <Filter>Source Files\class</Filter>
     </ClCompile>
   </ItemGroup>
