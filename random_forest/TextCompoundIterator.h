@@ -17,15 +17,16 @@ namespace TextCompoundIteratorState
 	};
 };
 
-class TextCompoundIterator: public boost::iterator_facade <TextCompoundIterator, CompoundRecord, boost::forward_traversal_tag>
+class TextCompoundIterator: public boost::iterator_facade <TextCompoundIterator, CompoundRecord, boost::forward_traversal_tag, CompoundRecord&>
 {
    friend class TextCompoundReader;
    
-protected:
+public:
    TextCompoundIterator();
-   
+
    TextCompoundIterator(const TextCompoundIterator&);
-   
+
+protected:
    boost::filesystem::path _path;
 
    TextCompoundIteratorState::TextCompoundIteratorState _state;
@@ -37,12 +38,12 @@ protected:
    
    bool equal(const TextCompoundIterator& other) const;
    
-   CompoundRecord& dereference();
+   CompoundRecord& dereference() const;
    
 private:
    std::ifstream _inputFileStream;
    
-   CompoundRecord _currentCompoundRecord;
+   mutable CompoundRecord _currentCompoundRecord;
 
    void init();
    

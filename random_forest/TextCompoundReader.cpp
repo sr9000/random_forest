@@ -12,5 +12,7 @@ CompoundRecordRange TextCompoundReader::get_CompoundRange()
    first._state = TextCompoundIteratorState::Begin;
    last._state = TextCompoundIteratorState::Finish;
 
+   first.init();
+
    return CompoundRecordRange(first, last);
 }

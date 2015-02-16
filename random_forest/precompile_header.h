@@ -1,5 +1,9 @@
 #pragma once
 
+#define BOOST_LIB_DIAGNOSTIC
+
+#include <boost/system/config.hpp>
+#include <boost/foreach.hpp>
 #include <boost/algorithm/string.hpp>
 #include <boost/filesystem/path.hpp>
 #include <boost/iterator/iterator_facade.hpp>

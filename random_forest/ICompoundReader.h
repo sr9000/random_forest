@@ -3,7 +3,7 @@
 #include "precompile_header.h"
 
 #include "CompoundRecord.h"
-#include "TextCompoundIterator.h"
+//#include "TextCompoundIterator.h"
 
 template <typename TRecord>
 class ICompoundReader

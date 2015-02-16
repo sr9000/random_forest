@@ -37,20 +37,7 @@ public:
 
 class CompoundReaderFactory
 {
-private:
-   //typedef boost::shared_ptr<ICompoundReader<ICompoundIterator> > ptr_type;
-   
 public:
-   
-/*   typedef ptr_type (*create_compound_reader_function) (CompoundReaderFactoryType::CompoundReaderFactoryType);
-   
-   void addFabricMethod(CompoundReaderFactoryType::CompoundReaderFactoryType type, create_compound_reader_function f);
-   
-   void removeFabricMethod(CompoundReaderFactoryType::CompoundReaderFactoryType type);*/
-   
    CompoundRecordReaderPtr createCompoundReader(const CompoundReaderCreationConfig& config);
-   
-private:
-   //std::map <CompoundReaderFactoryType::CompoundReaderFactoryType, create_compound_reader_function> _methodDictionary;
    
 };

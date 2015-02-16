@@ -34,13 +34,13 @@ void fillCompoundRecord(CompoundRecord& rec, const std::string& str)
    partsOfStringCompoundRecord.pop_back();
 
    rec._compoundId = partsOfStringCompoundRecord[0];
-   partsOfStringCompoundRecord.erase(partsOfStringCompoundRecord.begin);
+   partsOfStringCompoundRecord.erase(partsOfStringCompoundRecord.begin());
 
    rec._features.clear();
-   for (std::vector<std::string>::iterator itr = partsOfStringCompoundRecord.begin; itr != partsOfStringCompoundRecord.end(); ++itr)
+   BOOST_FOREACH(const std::string& value, partsOfStringCompoundRecord)
    {
       uint32_t n;
-      n = boost::lexical_cast<uint32_t>(*itr);
+      n = boost::lexical_cast<uint32_t>(value);
       rec._features.push_back(n);
    }
 }
@@ -98,7 +98,7 @@ bool TextCompoundIterator::equal(const TextCompoundIterator& other) const
 	}
 }
 
-CompoundRecord& TextCompoundIterator::dereference()
+CompoundRecord& TextCompoundIterator::dereference() const
 {
 	return _currentCompoundRecord;
 }
