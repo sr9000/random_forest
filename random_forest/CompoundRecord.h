@@ -10,10 +10,10 @@ public:
    CompoundId _compoundId;
    
    std::vector <uint32_t> _features;
-
-   CompoundRecord();
-
-   CompoundRecord(const CompoundRecord&);
+   
+   CompoundRecord(){};
+   
+   CompoundRecord(const CompoundRecord& other):_compoundId(other._compoundId),_features(other._features){};
    
 };
 

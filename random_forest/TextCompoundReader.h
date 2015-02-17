@@ -3,7 +3,6 @@
 #include "precompile_header.h"
 
 #include "ICompoundReader.h"
-#include "ICompoundIterator.h"
 #include "CompoundRecord.h"
 #include "CompoundReaderFactory.h"
 
@@ -11,27 +10,25 @@ class TextCompoundReader: public ICompoundReader<CompoundRecord>
 {
    friend class CompoundReaderFactory;
    
+protected:
+   typedef ICompoundReader<CompoundRecord> interface_type;
+   
 private:
    boost::filesystem::path _path;
    
 protected:
    TextCompoundReader(){};
    
-   TextCompoundReader(const boost::filesystem::path& path):_path(path){};
-   
-   typedef ICompoundReader<CompoundRecord> interface_type;
+   TextCompoundReader(const boost::filesystem::path& path);
    
 public:
    ~TextCompoundReader(){};
    
-   //implementation ICompoundReader
-   //virtual ICompoundReader::iterator_type ICompoundReader::begin();
-   //virtual ICompoundReader::iterator_type ICompoundReader::end();
+   //implementation ICompoundReader<CompoundRecord>
+   virtual CompoundRecordRange get_CompoundRecordRange();
    
-   virtual CompoundRecordRange get_CompoundRange();
+   void set_Path(const boost::filesystem::path&);
    
-   //boost::shared_ptr<TextCompoundReader::interface_type> textCompoundReaderFabricMethod (CompoundReaderFactoryType::CompoundReaderFactoryType type);
+   const boost::filesystem::path& get_Path() const;
    
 };
-
-//boost::shared_ptr<TextCompoundReader::interface_type> textCompoundReaderFabricMethod (CompoundReaderFactoryType::CompoundReaderFactoryType type); 

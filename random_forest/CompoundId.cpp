@@ -2,8 +2,6 @@
 
 #include "CompoundId.h"
 
-CompoundId::CompoundId(){};
-
 CompoundId::CompoundId(const std::string& full_compound)
 {
    std::vector <std::string> partsOfStringCompoundId;

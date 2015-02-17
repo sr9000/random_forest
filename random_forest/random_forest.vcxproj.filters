@@ -45,9 +45,6 @@
     <ClCompile Include="CompoundId.cpp">
       <Filter>Source Files\struct</Filter>
     </ClCompile>
-    <ClCompile Include="CompoundRecord.cpp">
-      <Filter>Source Files\struct</Filter>
-    </ClCompile>
     <ClCompile Include="TextCompoundIterator.cpp">
       <Filter>Source Files\class</Filter>
     </ClCompile>
@@ -70,9 +67,6 @@
     </ClInclude>
     <ClInclude Include="CompoundRecord.h">
       <Filter>Header Files\struct</Filter>
-    </ClInclude>
-    <ClInclude Include="ICompoundIterator.h">
-      <Filter>Header Files\interface</Filter>
     </ClInclude>
     <ClInclude Include="precompile_header.h">
       <Filter>Header Files</Filter>
