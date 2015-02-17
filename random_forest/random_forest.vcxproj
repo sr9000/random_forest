@@ -149,12 +149,16 @@
   <ItemGroup>
     <ClCompile Include="CompoundReaderFactory.cpp" />
     <ClCompile Include="CompoundId.cpp" />
+    <ClCompile Include="DirectedIstream.cpp" />
+    <ClCompile Include="DirectedStreambuf.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="TextCompoundIterator.cpp" />
     <ClCompile Include="TextCompoundReader.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CompoundId.h" />
+    <ClInclude Include="DirectedIstream.h" />
+    <ClInclude Include="DirectedStreambuf.h" />
     <ClInclude Include="TextCompoundReader.h" />
     <ClInclude Include="CompoundReaderFactory.h" />
     <ClInclude Include="CompoundRecord.h" />

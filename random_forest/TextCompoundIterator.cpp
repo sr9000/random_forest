@@ -1,6 +1,7 @@
 #include "precompile_header.h"
 
 #include "TextCompoundIterator.h"
+#include "DirectedStreambuf.h"
 
 using namespace TextCompoundIteratorState;
 using namespace std;
@@ -56,10 +57,10 @@ TextCompoundIterator::TextCompoundIterator(const boost::filesystem::path& path, 
 
 TextCompoundIterator::~TextCompoundIterator()
 {
-   if (_inputFileStream.is_open())
+   /*if (_inputFileStream.is_open())
    {
       _inputFileStream.close();
-   }
+   }*/
 }
 
 void TextCompoundIterator::increment()
@@ -110,10 +111,12 @@ void TextCompoundIterator::validate()
    case Proceed:
       break;
    case Begin:
-      if (!_inputFileStream.is_open())
+      if (!_file.is_open())
       {
-         _inputFileStream.open(get_Path().c_str(), ios_base::in);
-         read_CurrentCompoundRecord();
+         boost::iostreams::mapped_file_params params(get_Path().generic_string());
+         params.mode = ios_base::in;
+         _file.open(params);
+         _istreamPtr = DirectedIstreamPtr(new DirectedIstream(_file.data(), _file.size()));
       }
       break;
    case Unknown:
@@ -123,9 +126,25 @@ void TextCompoundIterator::validate()
    }
 }
 
+#include <boost/iostreams/device/file_descriptor.hpp>
+#include <boost/iostreams/stream.hpp>
+
 void TextCompoundIterator::read_CurrentCompoundRecord()
 {
-   string tmp;
+   boost::iostreams::mapped_file_source m("path");
+   //m.is_open()
+   
+   
+   boost::iostreams::stream < boost::iostreams::mapped_file_source > str(m);
+   //m.open();
+
+   string s;
+   getline(str, s);
+
+   
+
+
+   /*string tmp;
    getline(_inputFileStream, tmp);
    if (tmp == "")
    {
@@ -135,7 +154,7 @@ void TextCompoundIterator::read_CurrentCompoundRecord()
    else
    {
       fillCompoundRecord(_currentCompoundRecord, tmp);
-   }
+   }*/
 }
 
 void TextCompoundIterator::set_Path(const boost::filesystem::path& path)

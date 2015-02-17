@@ -48,6 +48,12 @@
     <ClCompile Include="TextCompoundIterator.cpp">
       <Filter>Source Files\class</Filter>
     </ClCompile>
+    <ClCompile Include="DirectedStreambuf.cpp">
+      <Filter>Source Files\class</Filter>
+    </ClCompile>
+    <ClCompile Include="DirectedIstream.cpp">
+      <Filter>Source Files\class</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ICompoundReader.h">
@@ -70,6 +76,12 @@
     </ClInclude>
     <ClInclude Include="precompile_header.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectedStreambuf.h">
+      <Filter>Header Files\class</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectedIstream.h">
+      <Filter>Header Files\class</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

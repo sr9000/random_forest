@@ -7,7 +7,7 @@ using namespace std;
 
 #include <ctime>
 
-//use memory mapped file boost
+//use memory mapped file boost..
 
 //iterator must skipped invalide records boost_optional
 

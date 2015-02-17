@@ -3,6 +3,7 @@
 #include "precompile_header.h"
 
 #include "CompoundRecord.h"
+#include "DirectedIstream.h"
 
 namespace TextCompoundIteratorState
 {
@@ -24,7 +25,9 @@ private:
    
    TextCompoundIteratorState::TextCompoundIteratorStateEnum _state;
    
-   std::ifstream _inputFileStream;
+   boost::iostreams::mapped_file _file;
+
+   DirectedIstreamPtr _istreamPtr;
    
    mutable CompoundRecord _currentCompoundRecord;
    
