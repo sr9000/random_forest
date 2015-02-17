@@ -8,7 +8,7 @@
 
 namespace TextCompoundIteratorState
 {
-	enum TextCompoundIteratorState
+	enum TextCompoundIteratorStateEnum
 	{
 		Begin,
 		Proceed,
@@ -19,32 +19,44 @@ namespace TextCompoundIteratorState
 
 class TextCompoundIterator: public boost::iterator_facade <TextCompoundIterator, CompoundRecord, boost::forward_traversal_tag, CompoundRecord&>
 {
-   friend class TextCompoundReader;
+   friend class boost::iterator_core_access;
+
+private:
+   boost::filesystem::path _path;
+
+   TextCompoundIteratorState::TextCompoundIteratorStateEnum _state;
+
+   std::ifstream _inputFileStream;
    
+   mutable CompoundRecord _currentCompoundRecord;
+
 public:
    TextCompoundIterator();
 
    TextCompoundIterator(const TextCompoundIterator&);
 
-protected:
-   boost::filesystem::path _path;
-
-   TextCompoundIteratorState::TextCompoundIteratorState _state;
+   TextCompoundIterator(const boost::filesystem::path&, TextCompoundIteratorState::TextCompoundIteratorStateEnum);
    
-   //implementation boost::iterator_facade <TextCompoundIterator, CompoundRecord, boost::forward_traversal_tag>
-   friend class boost::iterator_core_access;
-   
+   //implementation boost::iterator_facade <TextCompoundIterator, CompoundRecord, boost::forward_traversal_tag, CompoundRecord&>
    void increment();
    
+   //implementation boost::iterator_facade <TextCompoundIterator, CompoundRecord, boost::forward_traversal_tag, CompoundRecord&>
    bool equal(const TextCompoundIterator& other) const;
-   
+
+   //implementation boost::iterator_facade <TextCompoundIterator, CompoundRecord, boost::forward_traversal_tag, CompoundRecord&>
    CompoundRecord& dereference() const;
    
 private:
-   std::ifstream _inputFileStream;
-   
-   mutable CompoundRecord _currentCompoundRecord;
+   void validate();
 
-   void init();
+   void read_CurrentCompoundRecord();
+
+   void set_Path(const boost::filesystem::path&);
+
+   void set_State(TextCompoundIteratorState::TextCompoundIteratorStateEnum);
+
+   const boost::filesystem::path& get_Path() const;
+
+   const TextCompoundIteratorState::TextCompoundIteratorStateEnum get_State() const;
    
 };

@@ -1,4 +1,11 @@
-﻿standart
+﻿a) public/protected/private
+
+1)typedef
+1.5) fields
+2)constr/destr
+3)method
+
+standart
 имена классов - ClassName
 имена переменных - variableName
 имена членов - _memberVariable
@@ -15,12 +22,7 @@
 буст пишем целиком
 сокращение скобок в for и if допускается в редких случаях когда всё точно понятно
 
-a) public/protected/private
 
-1)typedef
-1.5) fields
-2)constr/destr
-3)method
 
 tz 1
 чтение коллекции

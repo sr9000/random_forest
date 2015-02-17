@@ -5,14 +5,6 @@
 
 CompoundRecordRange TextCompoundReader::get_CompoundRange()
 {
-   TextCompoundIterator first, last;
-   first._path = _path;
-   last._path = _path;
-   
-   first._state = TextCompoundIteratorState::Begin;
-   last._state = TextCompoundIteratorState::Finish;
-
-   first.init();
-
+   TextCompoundIterator first(_path, TextCompoundIteratorState::Begin), last(_path, TextCompoundIteratorState::Finish);
    return CompoundRecordRange(first, last);
 }

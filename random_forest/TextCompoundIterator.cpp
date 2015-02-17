@@ -2,79 +2,46 @@
 
 #include "TextCompoundIterator.h"
 
-TextCompoundIterator::TextCompoundIterator()
-{
-	_state = TextCompoundIteratorState::Unknown;
-}
+using namespace TextCompoundIteratorState;
+using namespace std;
 
-TextCompoundIterator::TextCompoundIterator(const TextCompoundIterator& other)
+void fillCompoundRecord(CompoundRecord& rec, const string& str)
 {
-	switch (other._state)
-	{
-	case TextCompoundIteratorState::Finish:
-		_path = other._path;
-      _state = TextCompoundIteratorState::Finish;
-      break;
-   case TextCompoundIteratorState::Begin:
-      _path = other._path;
-      _state = TextCompoundIteratorState::Begin;
-      init();
-		break;
-	case TextCompoundIteratorState::Proceed:
-		throw std::exception();
-		break;
-	case TextCompoundIteratorState::Unknown:
-		throw std::exception();
-		break;
-	default:
-		throw std::exception();
-		break;
-	}
-}
-
-void fillCompoundRecord(CompoundRecord& rec, const std::string& str)
-{
-	std::vector<std::string> partsOfStringCompoundRecord;
+	vector<string> partsOfStringCompoundRecord;
    boost::split(partsOfStringCompoundRecord, str, boost::is_any_of(","));
-   //partsOfStringCompoundRecord.pop_back();
 
    rec._compoundId = partsOfStringCompoundRecord[0];
    partsOfStringCompoundRecord.erase(partsOfStringCompoundRecord.begin());
 
    rec._features.clear();
-   BOOST_FOREACH(const std::string& value, partsOfStringCompoundRecord)
+   BOOST_FOREACH(const string& value, partsOfStringCompoundRecord)
    {
-      uint32_t n;
-      n = boost::lexical_cast<uint32_t>(value);
-      rec._features.push_back(n);
+      rec._features.push_back(boost::lexical_cast<uint32_t>(value));
    }
 }
 
-void TextCompoundIterator::init()
+TextCompoundIterator::TextCompoundIterator()
 {
-   std::string tmp;
-	switch (_state)
+	set_State(Unknown);
+}
+
+TextCompoundIterator::TextCompoundIterator(const TextCompoundIterator& other)
+{
+   switch (other.get_State())
 	{
-	case TextCompoundIteratorState::Begin:
-		if (!_inputFileStream.is_open())
-		{
-			_inputFileStream.open(_path.c_str(), std::ios_base::in);
-         std::getline(_inputFileStream, tmp);
-         if (tmp == "")
-         {
-            _inputFileStream.close();
-            _state = TextCompoundIteratorState::Finish;
-         }
-         else
-         {
-            fillCompoundRecord(_currentCompoundRecord, tmp);
-         }
-		}
+	case Finish:
+      set_Path(other.get_Path());
+      set_State(Finish);
+      break;
+   case Begin:
+      set_Path(other.get_Path());
+      set_State(Begin);
+      validate();
 		break;
-	case TextCompoundIteratorState::Finish:
-	case TextCompoundIteratorState::Proceed:
+	case Proceed:
+		throw std::exception();
 		break;
-	case TextCompoundIteratorState::Unknown:
+	case Unknown:
 		throw std::exception();
 		break;
 	default:
@@ -83,22 +50,51 @@ void TextCompoundIterator::init()
 	}
 }
 
+TextCompoundIterator::TextCompoundIterator(const boost::filesystem::path& path, TextCompoundIteratorStateEnum state)
+{
+   set_Path(path);
+   set_State(state);
+   validate();
+}
+
+void TextCompoundIterator::increment()
+{
+   string tmp;
+   switch (get_State())
+	{
+   case Begin:
+      set_State(Proceed);
+   case Proceed:
+      read_CurrentCompoundRecord();
+      break;
+   case Finish:
+      throw exception();
+		break;
+   case Unknown:
+      throw exception();
+		break;
+   default:
+      throw exception();
+		break;
+   }
+}
+
 bool TextCompoundIterator::equal(const TextCompoundIterator& other) const
 {
-	switch (other._state)
+	switch (other.get_State())
 	{
-	case TextCompoundIteratorState::Begin:
-	case TextCompoundIteratorState::Finish:
-		return _state == other._state;
+	case Begin:
+	case Finish:
+		return (get_State() == other.get_State());
 		break;
-	case TextCompoundIteratorState::Proceed:
+	case Proceed:
 		return false;
 		break;
-	case TextCompoundIteratorState::Unknown:
-		throw std::exception();
+	case Unknown:
+		throw exception();
 		break;
 	default:
-		throw std::exception();
+		throw exception();
 		break;
 	}
 }
@@ -108,33 +104,59 @@ CompoundRecord& TextCompoundIterator::dereference() const
 	return _currentCompoundRecord;
 }
 
-void TextCompoundIterator::increment()
+void TextCompoundIterator::validate()
 {
-   std::string tmp;
-   switch (_state)
+   switch (get_State())
 	{
-   case TextCompoundIteratorState::Begin:
-      _state = TextCompoundIteratorState::Proceed;
-   case TextCompoundIteratorState::Proceed:
-      std::getline(_inputFileStream, tmp);
-      if (tmp == "")
-      {
-         _inputFileStream.close();
-         _state = TextCompoundIteratorState::Finish;
-      }
-      else
-      {
-         fillCompoundRecord(_currentCompoundRecord, tmp);
-      }
-      break;
-   case TextCompoundIteratorState::Finish:
-      throw std::exception();
+	case Begin:
+		if (!_inputFileStream.is_open())
+		{
+         _inputFileStream.open(get_Path().c_str(), ios_base::in);
+         read_CurrentCompoundRecord();
+		}
+	case Finish:
+	case Proceed:
 		break;
-   case TextCompoundIteratorState::Unknown:
-      throw std::exception();
+	case Unknown:
+		throw exception();
 		break;
-   default:
-      throw std::exception();
+	default:
+		throw exception();
 		break;
+	}
+}
+
+void TextCompoundIterator::read_CurrentCompoundRecord()
+{
+   string tmp;
+   getline(_inputFileStream, tmp);
+   if (tmp == "")
+   {
+      _inputFileStream.close();
+      set_State(Finish);
    }
+   else
+   {
+      fillCompoundRecord(_currentCompoundRecord, tmp);
+   }
+}
+
+void TextCompoundIterator::set_Path(const boost::filesystem::path& path)
+{
+   _path = path;
+}
+
+void TextCompoundIterator::set_State(TextCompoundIteratorStateEnum state)
+{
+   _state = state;
+}
+
+const boost::filesystem::path& TextCompoundIterator::get_Path() const
+{
+   return _path;
+}
+
+const TextCompoundIteratorStateEnum TextCompoundIterator::get_State() const
+{
+   return _state;
 }
