@@ -19,15 +19,19 @@ int main()
 {
    CompoundReaderCreationConfig conf;
    conf.set_Type(CompoundReaderFactoryType::TextFile);
-   conf.set_Path(boost::filesystem::path(L"D:\\Files\\code\\sandbox\\Decision tree\\stepan_csv\\stepan_example.csv"));
+   conf.set_Path(boost::filesystem::path("D:/Files/code/sandbox/Decision tree/stepan_csv/stepan_csv.csv"));
    CompoundRecordReaderPtr compoundRecordReader = CompoundReaderFactory::createCompoundReader(conf);
    clock_t b = clock();
-   BOOST_FOREACH(CompoundRecord& rec, compoundRecordReader.get()->get_CompoundRecordRange())
+   int i = 0;
+   BOOST_FOREACH(const CompoundRecord& rec, compoundRecordReader->get_CompoundRecordRange())
    {
       CompoundRecord rec2(rec);
-      rec._features.clear();
-      cout << rec2._compoundId._inchiCore << " " << rec2._features.size() << endl;
+      ++i;
+      if (!(i%1000)) cout << "!";
+      //rec._features.clear();
+      //cout << rec2._compoundId._inchiCore << " " << rec2._features.size() << endl;
    }
+   cout << i << endl;
    cout << clock() - b << endl;
    cout << "HW!";
    return 0;

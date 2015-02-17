@@ -3,7 +3,6 @@
 #include "precompile_header.h"
 
 #include "CompoundRecord.h"
-#include "DirectedIstream.h"
 
 namespace TextCompoundIteratorState
 {
@@ -20,14 +19,21 @@ class TextCompoundIterator: public boost::iterator_facade <TextCompoundIterator,
 {
    friend class boost::iterator_core_access;
    
+public:
+   typedef boost::shared_ptr<boost::iostreams::mapped_file_source> mapped_file_ptr;
+
+   typedef boost::iostreams::stream<boost::iostreams::mapped_file_source> mapped_file_stream;
+
+   typedef boost::shared_ptr<mapped_file_stream > mapped_file_stream_ptr;
+
 private:
    boost::filesystem::path _path;
    
    TextCompoundIteratorState::TextCompoundIteratorStateEnum _state;
    
-   boost::iostreams::mapped_file _file;
+   mapped_file_ptr _filePtr;
 
-   DirectedIstreamPtr _istreamPtr;
+   mapped_file_stream_ptr _streamPtr;
    
    mutable CompoundRecord _currentCompoundRecord;
    

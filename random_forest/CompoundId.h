@@ -5,7 +5,9 @@
 struct CompoundId
 {
 public:
-   std::string _inchiCore, _inchiStereo, _inchiChecksum;
+   std::string _inchiCore;
+   std::string _inchiStereo;
+   std::string _inchiChecksum;
    
    CompoundId(){};
    

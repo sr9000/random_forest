@@ -12,8 +12,7 @@ TextCompoundReader::TextCompoundReader(const boost::filesystem::path& path)
 
 CompoundRecordRange TextCompoundReader::get_CompoundRecordRange()
 {
-   TextCompoundIterator first(get_Path(), Begin), last(get_Path(), Finish);
-   return CompoundRecordRange(first, last);
+    return CompoundRecordRange(TextCompoundIterator(get_Path(), Begin), TextCompoundIterator(get_Path(), Finish));
 }
 
 void TextCompoundReader::set_Path(const boost::filesystem::path& path)
