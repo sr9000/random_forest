@@ -57,6 +57,14 @@ TextCompoundIterator::TextCompoundIterator(const boost::filesystem::path& path, 
    validate();
 }
 
+TextCompoundIterator::~TextCompoundIterator()
+{
+   if (_inputFileStream.is_open())
+   {
+      _inputFileStream.close();
+   }
+}
+
 void TextCompoundIterator::increment()
 {
    string tmp;
@@ -114,7 +122,9 @@ void TextCompoundIterator::validate()
          _inputFileStream.open(get_Path().c_str(), ios_base::in);
          read_CurrentCompoundRecord();
 		}
+      break;
 	case Finish:
+      break;
 	case Proceed:
 		break;
 	case Unknown:

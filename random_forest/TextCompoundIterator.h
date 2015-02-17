@@ -36,6 +36,8 @@ public:
    TextCompoundIterator(const TextCompoundIterator&);
 
    TextCompoundIterator(const boost::filesystem::path&, TextCompoundIteratorState::TextCompoundIteratorStateEnum);
+
+   ~TextCompoundIterator();
    
    //implementation boost::iterator_facade <TextCompoundIterator, CompoundRecord, boost::forward_traversal_tag, CompoundRecord&>
    void increment();
