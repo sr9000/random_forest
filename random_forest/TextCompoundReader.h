@@ -6,7 +6,7 @@
 #include "CompoundRecord.h"
 #include "CompoundReaderFactory.h"
 
-class TextCompoundReader: public ICompoundReader<CompoundRecord>
+class TextCompoundReader: public ICompoundReader<CompoundRecordOptional>
 {
    friend class CompoundReaderFactory;
    
@@ -14,21 +14,17 @@ protected:
    typedef ICompoundReader<CompoundRecord> interface_type;
    
 private:
-   boost::filesystem::path _path;
+   const boost::filesystem::path _path;
    
 protected:
    TextCompoundReader(){};
    
-   TextCompoundReader(const boost::filesystem::path& path);
+   TextCompoundReader(const boost::filesystem::path& path):_path(path){};
    
 public:
    ~TextCompoundReader(){};
    
    //implementation ICompoundReader<CompoundRecord>
    virtual CompoundRecordRange get_CompoundRecordRange();
-   
-   void set_Path(const boost::filesystem::path&);
-   
-   const boost::filesystem::path& get_Path() const;
    
 };

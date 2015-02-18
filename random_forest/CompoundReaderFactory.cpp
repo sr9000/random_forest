@@ -2,6 +2,7 @@
 
 #include "CompoundReaderFactory.h"
 #include "TextCompoundReader.h"
+#include "Macros.h"
 
 using namespace CompoundReaderFactoryType;
 using namespace std;
@@ -33,6 +34,6 @@ CompoundRecordReaderPtr CompoundReaderFactory::createCompoundReader(const Compou
       case TextFile:
          return CompoundRecordReaderPtr(new TextCompoundReader(config.get_Path()));
       default:
-         throw exception();
+         THROWEXCEPTION("No implementation", "No case option");
    }
 }

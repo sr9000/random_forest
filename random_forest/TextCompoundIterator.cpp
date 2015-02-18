@@ -1,98 +1,80 @@
 #include "precompile_header.h"
 
 #include "TextCompoundIterator.h"
+#include "Macros.h"
 
 using namespace TextCompoundIteratorState;
 using namespace std;
 
-void fillCompoundRecord(CompoundRecord& rec, const string& str)
+void FillCompoundRecordOptional(CompoundRecordOptional&, const string&);
+
+TextCompoundIterator::TextCompoundIterator(const boost::filesystem::path& path, TextCompoundIteratorStateEnum state):_path(path),_state(state)
 {
-   vector<string> partsOfStringCompoundRecord;
-   boost::split(partsOfStringCompoundRecord, str, boost::is_any_of(","));
-   
-   rec._compoundId = partsOfStringCompoundRecord[0];
-   partsOfStringCompoundRecord.erase(partsOfStringCompoundRecord.begin());
-   
-   rec._features.clear();
-   BOOST_FOREACH(const string& value, partsOfStringCompoundRecord)
-   {
-      rec._features.push_back(boost::lexical_cast<uint32_t>(value));
-   }
+   validate();
 }
 
-TextCompoundIterator::TextCompoundIterator()
+TextCompoundIterator::TextCompoundIterator(const TextCompoundIterator& other):_path(other._path),_state(other._state)
 {
-   set_State(Unknown);
-}
-
-TextCompoundIterator::TextCompoundIterator(const TextCompoundIterator& other)
-{
-   switch (other.get_State())
+   switch (other._state)
    {
    case Finish:
-      set_Path(other.get_Path());
-      set_State(Finish);
       break;
    case Begin:
       {
-      set_Path(other.get_Path());
-      set_State(Begin);
-      _filePtr = TextCompoundIterator::mapped_file_ptr(new boost::iostreams::mapped_file_source(get_Path()));//other._filePtr;
-      _currentCompoundRecord = other._currentCompoundRecord;
-      streampos pos = other._streamPtr->tellg();
-      _streamPtr = mapped_file_stream_ptr(new mapped_file_stream());
-      _streamPtr->open(*_filePtr);
-      _streamPtr->seekg(pos);
-      
+         _filePtr = TextCompoundIterator::mapped_file_ptr(new boost::iostreams::mapped_file_source(_path));//other._filePtr;
+         _optionalCompoundRecord = other._optionalCompoundRecord;
+         streampos pos = other._streamPtr->tellg();
+         _streamPtr = mapped_file_stream_ptr(new mapped_file_stream());
+         _streamPtr->open(*_filePtr);
+         _streamPtr->seekg(pos);
       }
-      //validate();
       break;
    case Proceed:
-      throw exception();
+      THROWEXCEPTION("Wrong operation", "Copy constructor of \'TextCompoundIterator\'. You can not copy a \'TextCompoundIterator\' in the reading process.");
    case Unknown:
-      throw exception();
+      THROWEXCEPTION("Wrong operation", "Copy constructor of \'TextCompoundIterator\'. Source iterator was not initialized.");
    default:
-      throw exception();
+      THROWEXCEPTION("No implementation", "No case option");
    }
-}
-
-TextCompoundIterator::TextCompoundIterator(const boost::filesystem::path& path, TextCompoundIteratorStateEnum state)
-{
-   set_Path(path);
-   set_State(state);
-   validate();
 }
 
 TextCompoundIterator::~TextCompoundIterator()
 {
-   if (_streamPtr && _streamPtr->is_open() && _filePtr.unique())
+   if (_streamPtr && _streamPtr->is_open())
    {
       _streamPtr->close();
+   }
+   if (_filePtr && _filePtr->is_open())
+   {
+      _filePtr->close();
    }
 }
 
 void TextCompoundIterator::increment()
 {
-   string tmp;
-   switch (get_State())
+   switch (_state)
    {
    case Begin:
-      set_State(Proceed);
+      _state = Proceed;
    case Proceed:
-      read_CurrentCompoundRecord();
+      ReadCurrentCompoundRecord();
       break;
    case Finish:
-      throw exception();
+      THROWEXCEPTION("Wrong operation", "Method \'void TextCompoundIterator::increment()\'. You can not increment end iterator.");
    case Unknown:
-      throw exception();
+      THROWEXCEPTION("Wrong operation", "Method \'void TextCompoundIterator::increment()\'. You can not increment uninitialized iterator.");
    default:
-      throw exception();
+      THROWEXCEPTION("No implementation", "No case option");
    }
 }
 
 bool TextCompoundIterator::equal(const TextCompoundIterator& other) const
 {
-   switch (other.get_State())
+   if (_state == Unknown)
+   {
+      THROWEXCEPTION("Wrong operation", "Method \'bool TextCompoundIterator::equalconst TextCompoundIterator& other) const\'. You can not compare uninitialized iterator with other iterators.");
+   }
+   switch (other._state)
    {
    case Begin:
    case Finish:
@@ -100,20 +82,20 @@ bool TextCompoundIterator::equal(const TextCompoundIterator& other) const
    case Proceed:
       return false;
    case Unknown:
-      throw exception();
+      THROWEXCEPTION("Wrong operation", "Method \'bool TextCompoundIterator::equalconst TextCompoundIterator& other) const\'. You can not compare iterator with other uninitialized iterator.");
    default:
-      throw exception();
+      THROWEXCEPTION("No implementation", "No case option");
    }
 }
 
-CompoundRecord& TextCompoundIterator::dereference() const
+CompoundRecordOptional& TextCompoundIterator::dereference() const
 {
-   return _currentCompoundRecord;
+   return _optionalCompoundRecord;
 }
 
 void TextCompoundIterator::validate()
 {
-   switch (get_State())
+   switch (_state)
    {
    case Finish:
    case Proceed:
@@ -121,54 +103,81 @@ void TextCompoundIterator::validate()
    case Begin:
       if (!_filePtr)
       {
-         _filePtr = TextCompoundIterator::mapped_file_ptr(new boost::iostreams::mapped_file_source(get_Path()));
+         if (boost::filesystem::exists(_path))
+         {
+            _filePtr = TextCompoundIterator::mapped_file_ptr(new boost::iostreams::mapped_file_source(_path));
+         }
+         else
+         {
+            THROWEXCEPTION("Error", "Method \'void TextCompoundIterator::validate()\', file \'" + _path.generic_string() + "\' not found!");
+         }
       }
       _streamPtr = mapped_file_stream_ptr(new mapped_file_stream());
       if (!_streamPtr->is_open())
       {
          _streamPtr->open(*_filePtr);
       }
-      read_CurrentCompoundRecord();
+      ReadCurrentCompoundRecord();
       break;
    case Unknown:
-      throw exception();
+      THROWEXCEPTION("Wrong operation", "Method \'void TextCompoundIterator::validate()\'. You can not validate uninitialized iterator.");
    default:
-      throw exception();
+      THROWEXCEPTION("No implementation", "No case option");
    }
 }
 
-void TextCompoundIterator::read_CurrentCompoundRecord()
+void TextCompoundIterator::ReadCurrentCompoundRecord()
 {
    string tmp;
    getline(*_streamPtr, tmp);
    boost::algorithm::trim_if(tmp, boost::is_any_of("\r"));
+   boost::algorithm::trim(tmp);
    if (tmp.empty())
    {
-      _streamPtr->close();
-      set_State(Finish);
+      if (_streamPtr->eof())
+      {
+         _streamPtr->close();
+         _state = Finish;
+      }
+      else
+      {
+         _optionalCompoundRecord.reset();
+      }
    }
    else
    {
-      fillCompoundRecord(_currentCompoundRecord, tmp);
+      FillCompoundRecordOptional(_optionalCompoundRecord, tmp);
    }
 }
 
-void TextCompoundIterator::set_Path(const boost::filesystem::path& path)
+void FillCompoundRecordOptional(CompoundRecordOptional& opRec, const string& str)
 {
-   _path = path;
-}
+   CompoundRecord rec;
 
-void TextCompoundIterator::set_State(TextCompoundIteratorStateEnum state)
-{
-   _state = state;
-}
+   opRec.reset();
 
-const boost::filesystem::path& TextCompoundIterator::get_Path() const
-{
-   return _path;
-}
-
-const TextCompoundIteratorStateEnum TextCompoundIterator::get_State() const
-{
-   return _state;
+   vector<string> partsOfStringCompoundRecord;
+   boost::split(partsOfStringCompoundRecord, str, boost::is_any_of(","));
+   
+   rec._compoundId = partsOfStringCompoundRecord[0];
+   partsOfStringCompoundRecord.erase(partsOfStringCompoundRecord.begin());
+   
+   rec._features.clear();
+   bool fail = false;
+   BOOST_FOREACH(const string& value, partsOfStringCompoundRecord)
+   {
+      try
+      {
+         rec._features.push_back(boost::lexical_cast<uint32_t>(value));
+      }
+      catch(const boost::bad_lexical_cast &)
+      {
+         fail = true;
+         break;
+      }
+   }
+   if (!fail)
+   {
+      opRec = rec;
+   }
 }

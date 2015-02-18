@@ -155,6 +155,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CompoundId.h" />
+    <ClInclude Include="Macros.h" />
     <ClInclude Include="TextCompoundReader.h" />
     <ClInclude Include="CompoundReaderFactory.h" />
     <ClInclude Include="CompoundRecord.h" />

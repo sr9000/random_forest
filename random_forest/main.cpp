@@ -7,32 +7,52 @@ using namespace std;
 
 #include <ctime>
 
-//use memory mapped file boost..
-
-//iterator must skipped invalide records boost_optional
+#include "Macros.h"
 
 //iterator for read traindata
 
 //randomforest
 
-int main()
+void execute()
 {
    CompoundReaderCreationConfig conf;
    conf.set_Type(CompoundReaderFactoryType::TextFile);
-   conf.set_Path(boost::filesystem::path("D:/Files/code/sandbox/Decision tree/stepan_csv/stepan_csv.csv"));
+   conf.set_Path(boost::filesystem::path("stepan_example.csv"));
    CompoundRecordReaderPtr compoundRecordReader = CompoundReaderFactory::createCompoundReader(conf);
    clock_t b = clock();
    int i = 0;
-   BOOST_FOREACH(const CompoundRecord& rec, compoundRecordReader->get_CompoundRecordRange())
+   //THROWEXCEPTION("test", "test test");
+   BOOST_FOREACH(const CompoundRecordOptional& rec, compoundRecordReader->get_CompoundRecordRange())
    {
-      CompoundRecord rec2(rec);
       ++i;
       if (!(i%1000)) cout << "!";
-      //rec._features.clear();
-      //cout << rec2._compoundId._inchiCore << " " << rec2._features.size() << endl;
+      if (rec)
+      {
+         CompoundRecord rec2;
+         rec2 = *rec;
+         cout << rec2._compoundId._inchiCore << "-" 
+            << rec2._compoundId._inchiStereo << "-" 
+            << rec2._compoundId._inchiChecksum << " " << rec2._features.size() << endl;
+      }
+      else
+      {
+         cout << "no data\n";
+      }
    }
    cout << i << endl;
    cout << clock() - b << endl;
    cout << "HW!";
+}
+
+int main()
+{
+   try
+   {
+      execute();
+   }
+   catch(ThrowedException ex)
+   {
+      cout << ex.what();
+   }
    return 0;
 }

@@ -19,4 +19,4 @@ public:
    
 };
 
-typedef boost::shared_ptr<ICompoundReader<CompoundRecord> > CompoundRecordReaderPtr;
+typedef boost::shared_ptr<ICompoundReader<CompoundRecordOptional> > CompoundRecordReaderPtr;

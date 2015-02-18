@@ -15,7 +15,7 @@ namespace TextCompoundIteratorState
    };
 };
 
-class TextCompoundIterator: public boost::iterator_facade <TextCompoundIterator, CompoundRecord, boost::forward_traversal_tag, CompoundRecord&>
+class TextCompoundIterator: public boost::iterator_facade <TextCompoundIterator, CompoundRecordOptional, boost::forward_traversal_tag, CompoundRecordOptional&>
 {
    friend class boost::iterator_core_access;
    
@@ -27,7 +27,7 @@ public:
    typedef boost::shared_ptr<mapped_file_stream > mapped_file_stream_ptr;
 
 private:
-   boost::filesystem::path _path;
+   const boost::filesystem::path _path;
    
    TextCompoundIteratorState::TextCompoundIteratorStateEnum _state;
    
@@ -35,14 +35,14 @@ private:
 
    mapped_file_stream_ptr _streamPtr;
    
-   mutable CompoundRecord _currentCompoundRecord;
+   mutable CompoundRecordOptional _optionalCompoundRecord;
    
 public:
-   TextCompoundIterator();
+   TextCompoundIterator():_state(TextCompoundIteratorState::Unknown){};
+
+   TextCompoundIterator(const boost::filesystem::path&, TextCompoundIteratorState::TextCompoundIteratorStateEnum);
    
    TextCompoundIterator(const TextCompoundIterator&);
-   
-   TextCompoundIterator(const boost::filesystem::path&, TextCompoundIteratorState::TextCompoundIteratorStateEnum);
    
    ~TextCompoundIterator();
    
@@ -53,19 +53,11 @@ public:
    bool equal(const TextCompoundIterator& other) const;
    
    //implementation boost::iterator_facade <TextCompoundIterator, CompoundRecord, boost::forward_traversal_tag, CompoundRecord&>
-   CompoundRecord& dereference() const;
+   CompoundRecordOptional& dereference() const;
    
 private:
    void validate();
    
-   void read_CurrentCompoundRecord();
-   
-   void set_Path(const boost::filesystem::path&);
-   
-   void set_State(TextCompoundIteratorState::TextCompoundIteratorStateEnum);
-   
-   const boost::filesystem::path& get_Path() const;
-   
-   const TextCompoundIteratorState::TextCompoundIteratorStateEnum get_State() const;
+   void ReadCurrentCompoundRecord();
    
 };
