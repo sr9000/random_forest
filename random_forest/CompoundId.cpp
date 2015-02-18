@@ -2,9 +2,11 @@
 
 #include "CompoundId.h"
 
-CompoundId::CompoundId(const std::string& full_compound)
+using namespace std;
+
+CompoundId::CompoundId(const string& full_compound)
 {
-   std::vector <std::string> partsOfStringCompoundId;
+   vector <string> partsOfStringCompoundId;
    boost::split(partsOfStringCompoundId, full_compound, boost::is_any_of("-"));
 
    if (partsOfStringCompoundId.size() > 0)
@@ -21,4 +23,9 @@ CompoundId::CompoundId(const std::string& full_compound)
       _inchiChecksum = partsOfStringCompoundId[2];
    else
       _inchiChecksum = "";
+}
+
+string CompoundId::to_string()
+{
+   return _inchiCore + "-" + _inchiStereo + "-" + _inchiChecksum;
 }

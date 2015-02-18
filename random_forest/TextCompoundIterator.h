@@ -56,7 +56,7 @@ public:
    CompoundRecordOptional& dereference() const;
    
 private:
-   void validate();
+   void initialize();
    
    void ReadCurrentCompoundRecord();
    

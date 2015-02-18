@@ -10,7 +10,7 @@ void FillCompoundRecordOptional(CompoundRecordOptional&, const string&);
 
 TextCompoundIterator::TextCompoundIterator(const boost::filesystem::path& path, TextCompoundIteratorStateEnum state):_path(path),_state(state)
 {
-   validate();
+   initialize();
 }
 
 TextCompoundIterator::TextCompoundIterator(const TextCompoundIterator& other):_path(other._path),_state(other._state)
@@ -93,7 +93,7 @@ CompoundRecordOptional& TextCompoundIterator::dereference() const
    return _optionalCompoundRecord;
 }
 
-void TextCompoundIterator::validate()
+void TextCompoundIterator::initialize()
 {
    switch (_state)
    {
