@@ -155,6 +155,7 @@
     <ClInclude Include="CompoundId.h" />
     <ClInclude Include="RecordParser.h" />
     <ClInclude Include="ITextRecordIterator.h" />
+    <ClInclude Include="TargetRecord.h" />
     <ClInclude Include="TemplateParser.h" />
     <ClInclude Include="Macros.h" />
     <ClInclude Include="TemplateTextRecordIterator.h" />
