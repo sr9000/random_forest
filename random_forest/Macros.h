@@ -1,12 +1,11 @@
-#include <stdexcept>
-#include <string>
+#include "precompile_header.h"
 
 typedef std::runtime_error ThrowedException;
 
 #define THROWEXCEPTION(name, details)\
    {\
-      std::string msg = "\nException:   ";\
-      msg += name; msg += "\nIn File:     \'"; msg += __FILE__; msg += "\':"; msg += std::to_string(__LINE__);\
-      msg += "\nDetails:     "; msg += details; msg += "\n";\
-      throw  ThrowedException(msg);\
+      std::stringstream str(std::ios_base::out);\
+      str << "\nException:   " << name << "\nIn File:     \'" << __FILE__\
+         << "\':" << std::to_string(__LINE__) << "\nDetails:     " << details << std::endl;\
+      throw  ThrowedException(str.str());\
    }

@@ -150,18 +150,23 @@
     <ClCompile Include="CompoundReaderFactory.cpp" />
     <ClCompile Include="CompoundId.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="TextCompoundIterator.cpp" />
-    <ClCompile Include="TextCompoundReader.cpp" />
+    <ClCompile Include="TextRecordIterator.cpp" />
+    <ClCompile Include="TextCompoundRecordReader.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CompoundId.h" />
+    <ClInclude Include="DeclareReaderFactory.h" />
+    <ClInclude Include="RecordParser.h" />
+    <ClInclude Include="ITextRecordIterator.h" />
+    <ClInclude Include="TemplateParser.h" />
     <ClInclude Include="Macros.h" />
-    <ClInclude Include="TextCompoundReader.h" />
-    <ClInclude Include="CompoundReaderFactory.h" />
+    <ClInclude Include="TemplateTextRecordIterator.h" />
+    <ClInclude Include="TextRecordReader.h" />
+    <ClInclude Include="ReaderFactory.h" />
     <ClInclude Include="CompoundRecord.h" />
-    <ClInclude Include="ICompoundReader.h" />
+    <ClInclude Include="IRecordReader.h" />
     <ClInclude Include="precompile_header.h" />
-    <ClInclude Include="TextCompoundIterator.h" />
+    <ClInclude Include="TextRecordIterator.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

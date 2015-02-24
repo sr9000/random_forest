@@ -2,6 +2,13 @@
 
 #include "precompile_header.h"
 
+class CompoundIdException : public std::exception
+{
+public:
+   CompoundIdException(){}
+   
+};
+
 struct CompoundId
 {
 private:
@@ -11,10 +18,14 @@ private:
 public:
    CompoundId(){};
    
-   CompoundId(const CompoundId& other):_inchiCore(other._inchiCore),_inchiStereo(other._inchiStereo),_inchiChecksum(other._inchiChecksum){};
+   CompoundId(const CompoundId& other)
+      :_inchiCore(other._inchiCore),_inchiStereo(other._inchiStereo),_inchiChecksum(other._inchiChecksum)
+   {};
    
    CompoundId(const std::string& full_compound);
 
    std::string to_string();
+
+   CompoundId& operator=(const CompoundId&);
    
 };

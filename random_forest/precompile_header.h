@@ -8,6 +8,7 @@
 #include <boost/algorithm/string/trim.hpp>
 #include <boost/filesystem/path.hpp>
 #include <boost/filesystem/operations.hpp>
+#include <boost/function.hpp>
 #include <boost/iostreams/device/file_descriptor.hpp>
 #include <boost/iostreams/device/mapped_file.hpp>
 #include <boost/iostreams/stream.hpp>
@@ -20,7 +21,9 @@
 #include <iostream>
 #include <istream>
 #include <map>
+#include <stdexcept>
 #include <stdint.h>
 #include <streambuf>
 #include <string>
+#include <typeinfo>
 #include <vector>

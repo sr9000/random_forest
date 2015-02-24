@@ -13,7 +13,9 @@ public:
    
    CompoundRecord(){};
    
-   CompoundRecord(const CompoundRecord& other):_compoundId(other._compoundId),_features(other._features){};
+   CompoundRecord(const CompoundRecord& other)
+      :_compoundId(other._compoundId),_features(other._features)
+   {};
    
 };
 

@@ -1,7 +1,7 @@
 #include "precompile_header.h"
 
 #include "CompoundReaderFactory.h"
-#include "TextCompoundReader.h"
+#include "TextCompoundRecordReader.h"
 
 using namespace std;
 
@@ -42,7 +42,7 @@ int main()
    {
       execute();
    }
-   catch(ThrowedException ex)
+   catch(const ThrowedException& ex)
    {
       cout << ex.what();
    }

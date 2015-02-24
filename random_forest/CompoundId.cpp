@@ -8,24 +8,27 @@ CompoundId::CompoundId(const string& full_compound)
 {
    vector <string> partsOfStringCompoundId;
    boost::split(partsOfStringCompoundId, full_compound, boost::is_any_of("-"));
-
-   if (partsOfStringCompoundId.size() > 0)
+   if (partsOfStringCompoundId.size() == 3)
+   {
       _inchiCore = partsOfStringCompoundId[0];
-   else
-      _inchiCore = "";
-
-   if (partsOfStringCompoundId.size() > 1)
       _inchiStereo = partsOfStringCompoundId[1];
-   else
-      _inchiStereo = "";
-
-   if (partsOfStringCompoundId.size() > 2)
       _inchiChecksum = partsOfStringCompoundId[2];
+   }
    else
-      _inchiChecksum = "";
+   {
+      throw CompoundIdException();
+   }
 }
 
 string CompoundId::to_string()
 {
    return _inchiCore + "-" + _inchiStereo + "-" + _inchiChecksum;
+}
+
+CompoundId& CompoundId::operator=(const CompoundId& other)
+{
+   _inchiCore = other._inchiCore;
+   _inchiStereo = other._inchiStereo;
+   _inchiChecksum = other._inchiChecksum;
+   return *this;
 }

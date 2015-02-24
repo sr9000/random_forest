@@ -13,6 +13,18 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Header Files\parser">
+      <UniqueIdentifier>{80622d41-25e3-4333-ad3d-0af100e80223}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\reader">
+      <UniqueIdentifier>{4ac6a07e-cfd5-4923-afb4-73d57261c9cf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\record">
+      <UniqueIdentifier>{2739d2f2-9142-4b6f-a56b-d6467aad29de}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\iterator">
+      <UniqueIdentifier>{8fbeb888-d9aa-4ac3-ad7b-bdcb426cfaa8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -21,13 +33,13 @@
     <ClCompile Include="CompoundReaderFactory.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="TextCompoundIterator.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="TextCompoundReader.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="CompoundId.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="TextCompoundRecordReader.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="TextRecordIterator.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -35,26 +47,41 @@
     <ClInclude Include="precompile_header.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="CompoundReaderFactory.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="TextCompoundIterator.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="TextCompoundReader.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ICompoundReader.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="CompoundId.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="CompoundRecord.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Macros.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CompoundRecord.h">
+      <Filter>Header Files\record</Filter>
+    </ClInclude>
+    <ClInclude Include="TextRecordIterator.h">
+      <Filter>Header Files\iterator</Filter>
+    </ClInclude>
+    <ClInclude Include="ITextRecordIterator.h">
+      <Filter>Header Files\iterator</Filter>
+    </ClInclude>
+    <ClInclude Include="TemplateParser.h">
+      <Filter>Header Files\parser</Filter>
+    </ClInclude>
+    <ClInclude Include="TemplateTextRecordIterator.h">
+      <Filter>Header Files\iterator</Filter>
+    </ClInclude>
+    <ClInclude Include="RecordParser.h">
+      <Filter>Header Files\parser</Filter>
+    </ClInclude>
+    <ClInclude Include="IRecordReader.h">
+      <Filter>Header Files\reader</Filter>
+    </ClInclude>
+    <ClInclude Include="DeclareReaderFactory.h">
+      <Filter>Header Files\reader</Filter>
+    </ClInclude>
+    <ClInclude Include="ReaderFactory.h">
+      <Filter>Header Files\reader</Filter>
+    </ClInclude>
+    <ClInclude Include="TextRecordReader.h">
+      <Filter>Header Files\reader</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

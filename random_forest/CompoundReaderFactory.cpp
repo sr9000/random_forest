@@ -1,7 +1,7 @@
 #include "precompile_header.h"
 
 #include "CompoundReaderFactory.h"
-#include "TextCompoundReader.h"
+#include "TextCompoundRecordReader.h"
 #include "Macros.h"
 
 using namespace CompoundReaderFactoryType;
@@ -32,7 +32,7 @@ CompoundRecordReaderPtr CompoundReaderFactory::createCompoundReader(const Compou
    switch (config.get_Type())
    {
       case TextFile:
-         return CompoundRecordReaderPtr(new TextCompoundReader(config.get_Path()));
+         return CompoundRecordReaderPtr(new TextCompoundRecordReader(config.get_Path()));
       default:
          THROWEXCEPTION("No implementation", "No case option");
    }
