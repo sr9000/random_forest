@@ -20,4 +20,4 @@ public:
 };
 
 typedef boost::optional<CompoundRecord> CompoundRecordOptional;
-typedef boost::any_range <CompoundRecordOptional, boost::forward_traversal_tag, CompoundRecordOptional&, std::ptrdiff_t> CompoundRecordRange;
+typedef boost::any_range <CompoundRecordOptional, boost::forward_traversal_tag, const CompoundRecordOptional&, std::ptrdiff_t> CompoundRecordRange;

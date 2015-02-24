@@ -30,16 +30,10 @@
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="CompoundReaderFactory.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="CompoundId.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="TextCompoundRecordReader.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="TextRecordIterator.cpp">
+    <ClCompile Include="RecordReaderFactory.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -74,13 +68,10 @@
     <ClInclude Include="IRecordReader.h">
       <Filter>Header Files\reader</Filter>
     </ClInclude>
-    <ClInclude Include="DeclareReaderFactory.h">
-      <Filter>Header Files\reader</Filter>
-    </ClInclude>
-    <ClInclude Include="ReaderFactory.h">
-      <Filter>Header Files\reader</Filter>
-    </ClInclude>
     <ClInclude Include="TextRecordReader.h">
+      <Filter>Header Files\reader</Filter>
+    </ClInclude>
+    <ClInclude Include="RecordReaderFactory.h">
       <Filter>Header Files\reader</Filter>
     </ClInclude>
   </ItemGroup>

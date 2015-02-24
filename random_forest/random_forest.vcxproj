@@ -147,22 +147,19 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="CompoundReaderFactory.cpp" />
     <ClCompile Include="CompoundId.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="TextRecordIterator.cpp" />
-    <ClCompile Include="TextCompoundRecordReader.cpp" />
+    <ClCompile Include="RecordReaderFactory.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CompoundId.h" />
-    <ClInclude Include="DeclareReaderFactory.h" />
     <ClInclude Include="RecordParser.h" />
     <ClInclude Include="ITextRecordIterator.h" />
     <ClInclude Include="TemplateParser.h" />
     <ClInclude Include="Macros.h" />
     <ClInclude Include="TemplateTextRecordIterator.h" />
     <ClInclude Include="TextRecordReader.h" />
-    <ClInclude Include="ReaderFactory.h" />
+    <ClInclude Include="RecordReaderFactory.h" />
     <ClInclude Include="CompoundRecord.h" />
     <ClInclude Include="IRecordReader.h" />
     <ClInclude Include="precompile_header.h" />

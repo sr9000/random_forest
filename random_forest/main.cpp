@@ -1,7 +1,8 @@
 #include "precompile_header.h"
 
-#include "CompoundReaderFactory.h"
-#include "TextCompoundRecordReader.h"
+#include "CompoundRecord.h"
+#include "RecordReaderFactory.h"
+#include "TextRecordReader.h"
 
 using namespace std;
 
@@ -13,13 +14,14 @@ using namespace std;
 
 void execute()
 {
-   CompoundReaderCreationConfig conf;
-   conf.set_Type(CompoundReaderFactoryType::TextFile);
+   RecordReaderCreationConfig conf;
+   conf.set_Type(RecordReaderFactoryType::TextFile);
    conf.set_Path(boost::filesystem::path("stepan_example.csv"));
-   CompoundRecordReaderPtr compoundRecordReader = CompoundReaderFactory::createCompoundReader(conf);
+   conf.set_FileFormat(FileFormat::EndOfLineSeparator);
+   IRecordReader<CompoundRecordOptional>::RecordReaderPtr compoundRecordReader = RecordReaderFactory<CompoundRecordOptional>::createRecordReader(conf);
    int i = 0;
    //THROWEXCEPTION("test", "test test");
-   BOOST_FOREACH(const CompoundRecordOptional& rec, compoundRecordReader->get_CompoundRecordRange())
+   BOOST_FOREACH(const CompoundRecordOptional& rec, compoundRecordReader->get_RecordRange())
    {
       ++i;
       if (rec)

@@ -2,34 +2,35 @@
 
 #include "precompile_header.h"
 
-#include "DeclareReaderFactory.h"
-#include "IRecordReader.h"
 #include "CompoundRecord.h"
-#include "ITextRecordIterator.h"
+#include "IRecordReader.h"
+#include "TextRecordIterator.h"
 
 template<typename TRecord>
+class RecordReaderFactory;
+
+template<FileFormat::FileFormatEnum formatHint, typename TRecord>
 class TextRecordReader: public IRecordReader<TRecord>
 {
-   friend class ReaderFactory;
+   friend class RecordReaderFactory<TRecord>;
    
 private:
-   typedef IRecordReader<TRecord>::RecordRange range;
-   
    const boost::filesystem::path _path;
-
-   const FileFormat::FileFormatEnum _formatHint;
    
 protected:
    TextRecordReader():_formatHint(FileFormat::Unknown){};
    
-   TextRecordReader(const boost::filesystem::path& path, const FileFormat::FileFormatEnum formatHint)
-      :_path(path),_formatHint(formatHint)
+   TextRecordReader(const boost::filesystem::path& path)
+      :_path(path)
    {};
    
 public:
-   ~TextCompoundRecordReader(){};
+   ~TextRecordReader(){};
    
-   //implementation IRecordReader<RecordOptional>
-   virtual IRecordReaderType:: get_RecordRange();
+   //implementation IRecordReader<TRecord>
+   virtual typename IRecordReader<TRecord>::RecordRange get_RecordRange()
+   {
+      return typename IRecordReader<TRecord>::RecordRange(TextRecordIterator<formatHint, TRecord>(_path, TextRecordIteratorState::Begin), TextRecordIterator<formatHint, TRecord>(_path, TextRecordIteratorState::Finish));
+   }
    
 };
