@@ -24,7 +24,7 @@ public:
    
    CompoundId(const std::string& full_compound);
 
-   std::string to_string();
+   std::string to_string() const;
 
    CompoundId& operator=(const CompoundId&);
    

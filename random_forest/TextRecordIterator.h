@@ -34,7 +34,7 @@ public:
          {
             _filePtr = file_ptr(new TDevice(_path));
             _record = other._record;
-            streampos pos = other._streamPtr->tellg();
+            std::streampos pos = other._streamPtr->tellg();
             _streamPtr = file_stream_ptr(new file_stream());
             _streamPtr->open(*_filePtr);
             _streamPtr->seekg(pos);

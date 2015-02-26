@@ -20,7 +20,7 @@ CompoundId::CompoundId(const string& full_compound)
    }
 }
 
-string CompoundId::to_string()
+string CompoundId::to_string() const
 {
    return _inchiCore + "-" + _inchiStereo + "-" + _inchiChecksum;
 }

@@ -19,33 +19,33 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{89E9927E-9FDF-448F-BD30-F876B3D28268}</ProjectGuid>
+    <ProjectGuid>{3305DFAA-72F1-4D82-A596-864673A1D449}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
-    <RootNamespace>random_forest</RootNamespace>
-    <ProjectName>Iterator</ProjectName>
+    <RootNamespace>RandomForest</RootNamespace>
+    <ProjectName>RandomForest</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
-    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v110</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
-    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v110</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
-    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v110</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
-    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v110</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
@@ -85,7 +85,6 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <PrecompiledHeaderFile>precompile_header.h</PrecompiledHeaderFile>
       <AdditionalIncludeDirectories>$(BOOST_INCLUDEDIR)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
@@ -100,7 +99,6 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <PrecompiledHeaderFile>precompile_header.h</PrecompiledHeaderFile>
       <AdditionalIncludeDirectories>$(BOOST_INCLUDEDIR)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
@@ -117,7 +115,6 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <PrecompiledHeaderFile>precompile_header.h</PrecompiledHeaderFile>
       <AdditionalIncludeDirectories>$(BOOST_INCLUDEDIR)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
@@ -136,7 +133,6 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <PrecompiledHeaderFile>precompile_header.h</PrecompiledHeaderFile>
       <AdditionalIncludeDirectories>$(BOOST_INCLUDEDIR)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
@@ -148,25 +144,17 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="CompoundId.cpp" />
-    <ClCompile Include="IteratorStaticLib.cpp" />
-    <ClCompile Include="RecordReaderFactory.cpp" />
+    <ClInclude Include="DecisionTree.h" />
+    <ClInclude Include="stdafx.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="CompoundId.h" />
-    <ClInclude Include="IteratorStaticLib.h" />
-    <ClInclude Include="RecordParser.h" />
-    <ClInclude Include="ITextRecordIterator.h" />
-    <ClInclude Include="TargetRecord.h" />
-    <ClInclude Include="TemplateParser.h" />
-    <ClInclude Include="Macros.h" />
-    <ClInclude Include="TemplateTextRecordIterator.h" />
-    <ClInclude Include="TextRecordReader.h" />
-    <ClInclude Include="RecordReaderFactory.h" />
-    <ClInclude Include="CompoundRecord.h" />
-    <ClInclude Include="IRecordReader.h" />
-    <ClInclude Include="precompile_header.h" />
-    <ClInclude Include="TextRecordIterator.h" />
+    <ClCompile Include="DecisionTree.cpp" />
+    <ClCompile Include="Random Forest.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\random_forest\random_forest.vcxproj">
+      <Project>{89e9927e-9fdf-448f-bd30-f876b3d28268}</Project>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
