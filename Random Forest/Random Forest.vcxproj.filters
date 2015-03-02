@@ -21,12 +21,18 @@
     <ClInclude Include="DecisionTree.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="RandomForest.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Random Forest.cpp">
+    <ClCompile Include="DecisionTree.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="DecisionTree.cpp">
+    <ClCompile Include="Random Forest Exec.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="RandomForest.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

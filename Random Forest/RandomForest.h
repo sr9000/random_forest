@@ -6,9 +6,9 @@
 
 class RandomForest;
 
-void trainRandomForest(RandomForest& randomForest, const vector<Item>& trainData, const vector<Item>& testData, int mink = 0, int maxk = 0, uint32_t seed = 42); //because 42 is answer to life the universe and everything!
+void trainRandomForest(RandomForest& randomForest, const std::vector<Item>& trainData, const std::vector<Item>& testData, uint32_t seed = 42, int mink = 0, int maxk = 0); //because 42 is answer to life the universe and everything!
 
-void trainRandomForest(RandomForest& randomForest, const vector<const Item*>& trainData, const vector<const Item*>& testData, int mink = 0, int maxk = 0, uint32_t seed = 42); //because 42 is answer to life the universe and everything!
+void trainRandomForest(RandomForest& randomForest, const std::vector<const Item*>& trainData, const std::vector<const Item*>& testData, uint32_t seed = 42, int mink = 0, int maxk = 0); //because 42 is answer to life the universe and everything!
 
 struct RandomForest
 {
@@ -27,8 +27,8 @@ struct RandomForest
       _forest.clear();
    }
 
-   friend void trainRandomForest(RandomForest& randomForest, const vector<Item>& trainData, const vector<Item>& testData, int mink, int maxk, uint32_t seed);
+   friend void trainRandomForest(RandomForest& randomForest, const std::vector<Item>& trainData, const std::vector<Item>& testData, uint32_t seed, int mink, int maxk);
 
-   friend void trainRandomForest(RandomForest& randomForest, const vector<const Item*>& trainData, const vector<const Item*>& testData, int mink, int maxk, uint32_t seed);
+   friend void trainRandomForest(RandomForest& randomForest, const std::vector<const Item*>& trainData, const std::vector<const Item*>& testData, uint32_t seed, int mink, int maxk);
 
 };

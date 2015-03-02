@@ -145,11 +145,13 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="DecisionTree.h" />
+    <ClInclude Include="RandomForest.h" />
     <ClInclude Include="stdafx.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DecisionTree.cpp" />
-    <ClCompile Include="Random Forest.cpp" />
+    <ClCompile Include="Random Forest Exec.cpp" />
+    <ClCompile Include="RandomForest.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\random_forest\random_forest.vcxproj">

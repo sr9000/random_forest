@@ -4,7 +4,7 @@
 #include "stdafx.h"
 
 #include "..\random_forest\IteratorStaticLib.h"
-#include "DecisionTree.h"
+#include "RandomForest.h"
 
 using namespace std;
 
@@ -29,14 +29,15 @@ int main()
          ++n;
       }
    }
-   DecisionTree tree;
-   trainDecisionTree(tree, data);
+   RandomForest forest;
+   trainRandomForest(forest, data, data, 42);
    n = 0;
    for (int i = 0; i < 4; ++i)
    {
       for (int j = 0; j < 4; ++j)
       {
-         double x = tree.getClassTrueProbability(data[n]);
+         double x = forest.getClassTrueProbability(data[n]);
+         cout.width(10);
          cout << x << "\t";
          ++n;
       }
