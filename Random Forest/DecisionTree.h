@@ -119,3 +119,5 @@ struct DecisionTree
 };
 
 void trainDecisionTree(DecisionTree& decisionTree, const std::vector<Item>& trainData, const std::vector<int>& numberOfUsedFeatures = std::vector<int>());
+
+void trainDecisionTree(DecisionTree& decisionTree, const std::vector<const Item*>& trainData, const std::vector<int>& numberOfUsedFeatures = std::vector<int>());

@@ -99,6 +99,17 @@ void splitNode(DecisionTree::Node& node, const vector<int>& numberOfUsedFeatures
 
 void trainDecisionTree(DecisionTree& decisionTree, const vector<Item>& trainData, const vector<int>& numberOfUsedFeatures)
 {
+   vector<const Item*> ptrTrainData;
+   for (int i = 0; i < trainData.size(); ++i)
+   {
+      ptrTrainData.push_back(&trainData[i]);
+   }
+
+   trainDecisionTree(decisionTree, ptrTrainData, numberOfUsedFeatures);
+}
+
+void trainDecisionTree(DecisionTree& decisionTree, const vector<const Item*>& trainData, const vector<int>& numberOfUsedFeatures)
+{
    //exit if no data
    if (trainData.empty())
       return;
@@ -107,7 +118,7 @@ void trainDecisionTree(DecisionTree& decisionTree, const vector<Item>& trainData
    decisionTree._controlFooting = new DecisionTree::ControlFooting();
    if (numberOfUsedFeatures.empty())
    {
-      for (int i = 0; i < trainData.front()._features.size(); ++i)
+      for (int i = 0; i < trainData.front()->_features.size(); ++i)
          decisionTree._controlFooting->_numberOfUsedFeatures.push_back(i);
    }
    else
@@ -119,8 +130,8 @@ void trainDecisionTree(DecisionTree& decisionTree, const vector<Item>& trainData
    int t = 0;
    for (int i = 0; i < trainData.size(); ++i)
    {
-      if (trainData[i]._class) ++t;
-      decisionTree._root._controlFooting->_set.push_back(&trainData[i]);
+      if (trainData[i]->_class) ++t;
+      decisionTree._root._controlFooting->_set.push_back(trainData[i]);
    }
    decisionTree._root._controlFooting->_cashSetEntropy = entropy(t, trainData.size());
    //split root
