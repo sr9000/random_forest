@@ -6,7 +6,7 @@ using namespace std;
 
 bool less<vector<DecisionTree::Node*>::value_type>::operator()(const vector<DecisionTree::Node*>::value_type& left, const vector<DecisionTree::Node*>::value_type& right) const
 {
-   return left->_controlFooting->_cashSetEntropy < right->_controlFooting->_cashSetEntropy;
+   return left->_controlFooting->_cashDeltaEntropy < right->_controlFooting->_cashDeltaEntropy;
 }
 
 double DecisionTree::Node::getClassTrueProbability(const Item& item) const
@@ -14,9 +14,9 @@ double DecisionTree::Node::getClassTrueProbability(const Item& item) const
    if (_predictNode)
    {
       if (item.predicate(_predicateFeature))
-         _trueChild->getClassTrueProbability(item);
+         return _trueChild->getClassTrueProbability(item);
       else
-         _falseChild->getClassTrueProbability(item);
+         return _falseChild->getClassTrueProbability(item);
    }
    else
    {
@@ -41,14 +41,14 @@ void DecisionTree::Node::clear()
 
 double entropy(int t, int n)
 {
-   if (t == 0)
+   if (t == 0 || t == n)
       if (n == 0)
          return 1.0;
       else
          return 0.0;
 
    double x = (double)t / (double)n;
-   return -(x * std::log(x) + (1 - x) * std::log(1 - x));
+   return -(x * log(x) + (1 - x) * log(1 - x));
 }
 
 void splitNode(DecisionTree::Node& node, const vector<int>& numberOfUsedFeatures)
@@ -152,11 +152,11 @@ void trainDecisionTree(DecisionTree& decisionTree, const vector<Item>& trainData
          {
             if (bestNode._controlFooting->_cashSetPredict[bestNode._controlFooting->_bestPredict][i])
             {
-               tchild._controlFooting->_set.push_back(bestNode._controlFooting->_set[bestNode._controlFooting->_bestPredict]);
+               tchild._controlFooting->_set.push_back(bestNode._controlFooting->_set[i]);
             }
             else
             {
-               fchild._controlFooting->_set.push_back(bestNode._controlFooting->_set[bestNode._controlFooting->_bestPredict]);
+               fchild._controlFooting->_set.push_back(bestNode._controlFooting->_set[i]);
             }
          }
       }
@@ -165,7 +165,7 @@ void trainDecisionTree(DecisionTree& decisionTree, const vector<Item>& trainData
          bestNode._predictNode = false;
          int t = 0;
          for (int i = 0; i < bestNode._controlFooting->_set.size(); ++i)
-            if (bestNode._controlFooting->_cashSetPredict[bestNode._controlFooting->_bestPredict][i])
+            if (bestNode._controlFooting->_set[i]->_class)
                ++t;
          bestNode._classTrueProbability = (double)t / (double)(bestNode._controlFooting->_set.size());
       }

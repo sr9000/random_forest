@@ -23,7 +23,7 @@ int main()
    {
       for (int j = 0; j < 4; ++j)
       {
-         data[n]._class = (i >= 1 && i <= 2 && j >= 1 && j <= 2);
+         data[n]._class = (i >= 1 && i <= 2 && j >= 1 && j <= 2) || (i == 3 && j == 2);
          data[n]._features.push_back(Feature(0, i));
          data[n]._features.push_back(Feature(1, j));
          ++n;

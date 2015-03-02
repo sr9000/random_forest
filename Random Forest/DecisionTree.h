@@ -15,7 +15,7 @@ public:
    
    inline bool predicate(const double value) const
    {
-      return value < _value;
+      return _value < value;
    }
    
 };

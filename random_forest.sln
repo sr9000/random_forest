@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2012
+# Visual Studio Express 2012 for Windows Desktop
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Iterator", "random_forest\random_forest.vcxproj", "{89E9927E-9FDF-448F-BD30-F876B3D28268}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "RandomForest", "Random Forest\Random Forest.vcxproj", "{3305DFAA-72F1-4D82-A596-864673A1D449}"
@@ -23,8 +23,8 @@ Global
 		{89E9927E-9FDF-448F-BD30-F876B3D28268}.Debug|x64.Build.0 = Debug|x64
 		{89E9927E-9FDF-448F-BD30-F876B3D28268}.Release|Mixed Platforms.ActiveCfg = Release|Win32
 		{89E9927E-9FDF-448F-BD30-F876B3D28268}.Release|Mixed Platforms.Build.0 = Release|Win32
-		{89E9927E-9FDF-448F-BD30-F876B3D28268}.Release|Win32.ActiveCfg = Release|x64
-		{89E9927E-9FDF-448F-BD30-F876B3D28268}.Release|Win32.Build.0 = Release|x64
+		{89E9927E-9FDF-448F-BD30-F876B3D28268}.Release|Win32.ActiveCfg = Release|Win32
+		{89E9927E-9FDF-448F-BD30-F876B3D28268}.Release|Win32.Build.0 = Release|Win32
 		{89E9927E-9FDF-448F-BD30-F876B3D28268}.Release|x64.ActiveCfg = Release|x64
 		{89E9927E-9FDF-448F-BD30-F876B3D28268}.Release|x64.Build.0 = Release|x64
 		{3305DFAA-72F1-4D82-A596-864673A1D449}.Debug|Mixed Platforms.ActiveCfg = Debug|Win32
@@ -35,8 +35,8 @@ Global
 		{3305DFAA-72F1-4D82-A596-864673A1D449}.Debug|x64.Build.0 = Debug|x64
 		{3305DFAA-72F1-4D82-A596-864673A1D449}.Release|Mixed Platforms.ActiveCfg = Release|Win32
 		{3305DFAA-72F1-4D82-A596-864673A1D449}.Release|Mixed Platforms.Build.0 = Release|Win32
-		{3305DFAA-72F1-4D82-A596-864673A1D449}.Release|Win32.ActiveCfg = Release|x64
-		{3305DFAA-72F1-4D82-A596-864673A1D449}.Release|Win32.Build.0 = Release|x64
+		{3305DFAA-72F1-4D82-A596-864673A1D449}.Release|Win32.ActiveCfg = Release|Win32
+		{3305DFAA-72F1-4D82-A596-864673A1D449}.Release|Win32.Build.0 = Release|Win32
 		{3305DFAA-72F1-4D82-A596-864673A1D449}.Release|x64.ActiveCfg = Release|x64
 		{3305DFAA-72F1-4D82-A596-864673A1D449}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
