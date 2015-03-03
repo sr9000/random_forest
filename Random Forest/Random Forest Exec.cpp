@@ -3,7 +3,7 @@
 
 #include "stdafx.h"
 
-#include "..\random_forest\IteratorStaticLib.h"
+#include "../random_forest/IteratorStaticLib.h"
 #include "RandomForest.h"
 
 using namespace std;
@@ -17,7 +17,7 @@ int main()
       else
          std::cout << "???\n";
    }*/
-   vector<Item> data(16);
+   /*vector<Item> data(16);
    int n = 0;
    for (int i = 0; i < 4; ++i)
    {
@@ -42,6 +42,11 @@ int main()
          ++n;
       }
       cout << endl;
+   }*/
+   FileListReaderPtr ls = IteratorStaticLib::getFileListReader("D:/Files/code/sandbox/Decision tree/targetgen_full_hmr_test_1-0");
+   BOOST_FOREACH(const boost::filesystem::path& pth, ls->get_Range())
+   {
+      cout << pth.generic_string() << endl;
    }
 	return 0;
 }

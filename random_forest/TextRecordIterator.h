@@ -100,7 +100,7 @@ private:
       case TextRecordIteratorState::Proceed:
          return false;
       case TextRecordIteratorState::Unknown:
-         THROWEXCEPTION("Wrong operation", "Method \'bool TextRecordIterator<FileFormat::EndOfLineSeparator, TRecord, TDevice>::equal(const TextRecordIterator<FileFormat::EndOfLineSeparator, TRecord, TDevice>& other) const\'. You can not compare iterator with other iterator in \'Unknown\'.");
+         THROWEXCEPTION("Wrong operation", "Method \'bool TextRecordIterator<FileFormat::EndOfLineSeparator, TRecord, TDevice>::equal(const TextRecordIterator<FileFormat::EndOfLineSeparator, TRecord, TDevice>& other) const\'. You can not compare iterator with other iterator in \'Unknown\' state.");
       default:
          THROWEXCEPTION("No implementation", "No case option");
       }

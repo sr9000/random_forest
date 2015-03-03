@@ -22,7 +22,7 @@
     <Filter Include="Header Files\iterator">
       <UniqueIdentifier>{8fbeb888-d9aa-4ac3-ad7b-bdcb426cfaa8}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\record\reader">
+    <Filter Include="Header Files\reader">
       <UniqueIdentifier>{4ac6a07e-cfd5-4923-afb4-73d57261c9cf}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -34,6 +34,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="IteratorStaticLib.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="FileIterator.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -66,19 +69,28 @@
       <Filter>Header Files\parser</Filter>
     </ClInclude>
     <ClInclude Include="IRecordReader.h">
-      <Filter>Header Files\record\reader</Filter>
+      <Filter>Header Files\reader</Filter>
     </ClInclude>
     <ClInclude Include="TextRecordReader.h">
-      <Filter>Header Files\record\reader</Filter>
+      <Filter>Header Files\reader</Filter>
     </ClInclude>
     <ClInclude Include="RecordReaderFactory.h">
-      <Filter>Header Files\record\reader</Filter>
+      <Filter>Header Files\reader</Filter>
     </ClInclude>
     <ClInclude Include="TargetRecord.h">
       <Filter>Header Files\record</Filter>
     </ClInclude>
     <ClInclude Include="IteratorStaticLib.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="FileIterator.h">
+      <Filter>Header Files\iterator</Filter>
+    </ClInclude>
+    <ClInclude Include="FileListReaderFactory.h">
+      <Filter>Header Files\reader</Filter>
+    </ClInclude>
+    <ClInclude Include="FileListReader.h">
+      <Filter>Header Files\reader</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

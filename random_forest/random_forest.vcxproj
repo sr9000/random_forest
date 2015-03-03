@@ -149,11 +149,15 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="CompoundId.cpp" />
+    <ClCompile Include="FileIterator.cpp" />
     <ClCompile Include="IteratorStaticLib.cpp" />
     <ClCompile Include="RecordReaderFactory.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CompoundId.h" />
+    <ClInclude Include="FileIterator.h" />
+    <ClInclude Include="FileListReader.h" />
+    <ClInclude Include="FileListReaderFactory.h" />
     <ClInclude Include="IteratorStaticLib.h" />
     <ClInclude Include="RecordParser.h" />
     <ClInclude Include="ITextRecordIterator.h" />
