@@ -9,7 +9,7 @@ namespace FileFormat
    enum FileFormatEnum
    {
       Unknown, //uninitialized file format
-      EndOfLineSeparator //new line as separator
+      EndOfLineSeparator //use "\t" as inline separator, new line as line separator
    };
 };
 

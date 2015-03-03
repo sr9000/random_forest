@@ -5,8 +5,23 @@
 
 #include "../random_forest/IteratorStaticLib.h"
 #include "RandomForest.h"
+#include "SimilarityAlgorithm.h"
 
 using namespace std;
+
+void exec()
+{
+   IRecordReader<CompoundRecordOptional>::RecordReaderPtr compoundRR;
+   compoundRR = IteratorStaticLib::getCompoundRecordReader("D:/Files/code/sandbox/Decision tree/stepan_csv/stepan_csv.csv");
+   int k = 0;
+   map<string, CompoundRecord> mapData;
+   BOOST_FOREACH(const CompoundRecordOptional& rec, compoundRR->get_RecordRange())
+   {
+      if (rec)
+         //you write here...
+   }
+   cout << jaccardCoefficient(data[0]->_features, data[1]->_features);
+}
 
 int main()
 {
@@ -43,10 +58,18 @@ int main()
       }
       cout << endl;
    }*/
-   FileListReaderPtr ls = IteratorStaticLib::getFileListReader("D:/Files/code/sandbox/Decision tree/targetgen_full_hmr_test_1-0");
+   /*FileListReaderPtr ls = IteratorStaticLib::getFileListReader("D:/Files/code/sandbox/Decision tree/targetgen_full_hmr_test_1-0");
    BOOST_FOREACH(const boost::filesystem::path& pth, ls->get_Range())
    {
       cout << pth.generic_string() << endl;
+   }*/
+   try
+   {
+      exec();
+   }
+   catch(const ThrowedException& ex)
+   {
+      cout << ex.what();
    }
 	return 0;
 }

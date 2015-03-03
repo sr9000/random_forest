@@ -24,6 +24,9 @@
     <ClInclude Include="RandomForest.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="SimilarityAlgorithm.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DecisionTree.cpp">

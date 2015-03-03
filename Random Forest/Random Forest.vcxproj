@@ -146,6 +146,7 @@
   <ItemGroup>
     <ClInclude Include="DecisionTree.h" />
     <ClInclude Include="RandomForest.h" />
+    <ClInclude Include="SimilarityAlgorithm.h" />
     <ClInclude Include="stdafx.h" />
   </ItemGroup>
   <ItemGroup>

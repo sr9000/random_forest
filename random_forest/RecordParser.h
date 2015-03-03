@@ -30,7 +30,7 @@ struct RawRecordParser<CompoundRecordOptional>
       }
    
    
-      rec._features.resize(partsOfStringCompoundRecord.size() - 1);
+      //rec._features.resize(partsOfStringCompoundRecord.size() - 1);
       bool fail = false;
       for (std::vector<std::string>::iterator itr = partsOfStringCompoundRecord.begin() + 1; itr != partsOfStringCompoundRecord.end(); ++itr)
       {
