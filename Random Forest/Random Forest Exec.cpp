@@ -6,21 +6,46 @@
 #include "../random_forest/IteratorStaticLib.h"
 #include "RandomForest.h"
 #include "SimilarityAlgorithm.h"
+#include "../random_forest/Macros.h"
+#include "Macros.h"
 
 using namespace std;
 
+void init_log()
+{
+   namespace pt = boost::posix_time;
+   namespace lg = boost::log;
+   string filename = "../logs/log_" + pt::to_iso_string(pt::second_clock::local_time()) + ".log";
+
+   lg::add_file_log(filename);
+   lg::core::get()->set_filter
+   (
+      lg::trivial::severity >= lg::trivial::info
+   );
+}
+
 void exec()
 {
-   IRecordReader<CompoundRecordOptional>::RecordReaderPtr compoundRR;
+   LOG << "a";
+   LOG << "b";
+   THROWEXCEPTION("A", "B");
+   LOG << "c";
+   return;
+   /*IRecordReader<CompoundRecordOptional>::RecordReaderPtr compoundRR;
    compoundRR = IteratorStaticLib::getCompoundRecordReader("D:/Files/code/sandbox/Decision tree/stepan_csv/stepan_csv.csv");
    int k = 0;
    map<string, CompoundRecord> mapData;
-   BOOST_FOREACH(const CompoundRecordOptional& rec, compoundRR->get_RecordRange())
    {
-      if (rec)
-         //you write here...
-   }
-   cout << jaccardCoefficient(data[0]->_features, data[1]->_features);
+      int failed = 0;
+      BOOST_FOREACH(const CompoundRecordOptional& rec, compoundRR->get_RecordRange())
+      {
+         if (rec)
+            mapData.insert(pair<string, CompoundRecord>(rec->_compoundId.to_string(), *rec));
+         else
+            ++failed;
+      }
+      //cout << mapData.s
+   }*/
 }
 
 int main()
@@ -65,12 +90,13 @@ int main()
    }*/
    try
    {
+      init_log();
       exec();
    }
    catch(const ThrowedException& ex)
    {
+      LOG << ex.what();
       cout << ex.what();
    }
 	return 0;
 }
-

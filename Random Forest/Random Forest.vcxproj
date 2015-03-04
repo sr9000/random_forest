@@ -100,6 +100,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>$(BOOST_INCLUDEDIR)</AdditionalIncludeDirectories>
+      <AdditionalOptions>/Zm400</AdditionalOptions>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -134,6 +135,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>$(BOOST_INCLUDEDIR)</AdditionalIncludeDirectories>
+      <AdditionalOptions>/Zm400</AdditionalOptions>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -145,6 +147,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="DecisionTree.h" />
+    <ClInclude Include="Macros.h" />
     <ClInclude Include="RandomForest.h" />
     <ClInclude Include="SimilarityAlgorithm.h" />
     <ClInclude Include="stdafx.h" />

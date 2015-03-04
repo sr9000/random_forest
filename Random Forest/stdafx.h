@@ -7,6 +7,9 @@
 
 #define BOOST_LIB_DIAGNOSTIC
 
+#include <boost/date_time/posix_time/posix_time.hpp> //no i/o just types
+#include <boost/date_time/date_clock_device.hpp>
+
 #include <algorithm>
 #include <boost/algorithm/string.hpp>
 #include <boost/algorithm/string/trim.hpp>
@@ -20,6 +23,10 @@
 #include <boost/iostreams/stream.hpp>
 #include <boost/iterator/iterator_facade.hpp>
 #include <boost/lexical_cast.hpp>
+#include <boost/log/core.hpp>
+#include <boost/log/expressions.hpp>
+#include <boost/log/trivial.hpp>
+#include <boost/log/utility/setup/file.hpp>
 #include <boost/optional.hpp>
 #include <boost/random.hpp>
 #include <boost/range/any_range.hpp>
