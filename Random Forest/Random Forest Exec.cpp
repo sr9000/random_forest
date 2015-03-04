@@ -26,10 +26,19 @@ void init_log()
 
 void exec()
 {
-   LOG << "a";
-   LOG << "b";
-   THROWEXCEPTION("A", "B");
-   LOG << "c";
+   vector<pair<boost::filesystem::path, boost::filesystem::path> > learningData; //first - train, second - test
+   boost::filesystem::path featuresData("D:/Files/code/sandbox/Decision tree/stepan_csv/stepan_csv.csv");
+   boost::filesystem::path predData("D:/Files/code/sandbox/Decision tree/targetgen_full_hmr_pred");
+
+   learningData.push_back(
+      pair<boost::filesystem::path, boost::filesystem::path>(
+         boost::filesystem::path("D:/Files/code/sandbox/Decision tree/targetgen_full_hmr_train_1-0"),
+         boost::filesystem::path("D:/Files/code/sandbox/Decision tree/targetgen_full_hmr_test_1-0")));
+
+   learningData.push_back(
+      pair<boost::filesystem::path, boost::filesystem::path>(
+         boost::filesystem::path("D:/Files/code/sandbox/Decision tree/targetgen_full_hmr_train_2-2"),
+         boost::filesystem::path("D:/Files/code/sandbox/Decision tree/targetgen_full_hmr_test_2-2")));
    return;
    /*IRecordReader<CompoundRecordOptional>::RecordReaderPtr compoundRR;
    compoundRR = IteratorStaticLib::getCompoundRecordReader("D:/Files/code/sandbox/Decision tree/stepan_csv/stepan_csv.csv");
