@@ -8,6 +8,17 @@ typedef boost::mt19937 RNGType;
 
 typedef boost::variate_generator<RNGType, boost::uniform_int<> > RNG;
 
+vector<uint8_t>& RandomForest::serialize() const
+{
+   vector<uint8_t> res;
+   BOOST_FOREACH(const DecisionTree& tree, _forest)
+   {
+      vector<uint8_t> treeBin = tree.serialize();
+      res.insert(res.cbegin(), treeBin.begin(), treeBin.end());
+   }
+   return res;
+}
+
 void trainRandomForest(RandomForest& randomForest, const vector<Item>& trainData, const vector<Item>& testData, uint32_t seed, int mink, int maxk) //because 42 is answer to life the universe and everything!
 {
    vector<const Item*> ptrTrainData;

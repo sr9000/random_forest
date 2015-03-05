@@ -81,6 +81,8 @@ struct DecisionTree
       double getClassTrueProbability(const Item&) const;
 
       void clear();
+
+      void serialize(std::vector<uint8_t>& v) const;
       
    };
    
@@ -115,6 +117,8 @@ struct DecisionTree
    }
 
    void clear();
+
+   std::vector<uint8_t>& serialize() const;
    
 };
 
