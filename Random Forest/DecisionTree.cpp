@@ -46,7 +46,7 @@ void DecisionTree::Node::serialize(vector<uint8_t>& v) const
    if (_predictNode)
    {
       v.push_back(predicateRoot);
-      for (int i = 0; i < (1 + sizeof(Feature) / sizeof(uint8_t)); ++i)
+      for (int i = 0; i < sizeof(Feature); ++i)
          v.push_back(((uint8_t*)&_predicateFeature)[i]);
       _trueChild->serialize(v);
       _falseChild->serialize(v);
@@ -54,16 +54,14 @@ void DecisionTree::Node::serialize(vector<uint8_t>& v) const
    else
    {
       v.push_back(finishRoot);
-      for (int i = 0; i < (1 + sizeof(double) / sizeof(uint8_t)); ++i)
+      for (int i = 0; i < sizeof(double); ++i)
          v.push_back(((uint8_t*)&_classTrueProbability)[i]);
    }
 }
 
-std::vector<uint8_t>& DecisionTree::serialize() const
+void DecisionTree::serialize(vector<uint8_t>& v) const
 {
-   vector<uint8_t> v;
    _root.serialize(v);
-   return v;
 }
 
 double entropy(int t, int n)

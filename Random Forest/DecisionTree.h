@@ -118,7 +118,7 @@ struct DecisionTree
 
    void clear();
 
-   std::vector<uint8_t>& serialize() const;
+   void serialize(std::vector<uint8_t>&) const;
    
 };
 

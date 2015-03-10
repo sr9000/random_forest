@@ -24,11 +24,52 @@ void init_log()
    );
 }
 
+/*template <typename T>
+inline void outAsByte(FILE* f, const T& val)
+{
+   //sizeof(T);
+   fwrite((void*)(&val), sizeof(T), 1, f);
+}
+
+template <typename T>
+inline void inAsByte(FILE* f, T& val)
+{
+   fread((void*)(&val), sizeof(T), 1, f);
+}
+*/
+template <typename TStream, typename T>
+inline void outAsByte(TStream& stream, const T& val)
+{
+   //sizeof(T);
+//   fwrite((void*)(&val), sizeof(T), 1, f);
+   stream.write((char*)(&val), sizeof(T));
+}
+
+template <typename TStream, typename T>
+inline void inAsByte(TStream& stream, T& val)
+{
+   stream.read((char*)(&val), sizeof(T));
+}
+
+/*template <typename T>
+inline void outAsByte(fstream& stream, const T& val)
+{
+   //sizeof(T);
+   fwrite((void*)(&val), sizeof(T), 1, f);
+}
+
+template <typename T>
+inline void inAsByte(FILE* f, T& val)
+{
+   fread((void*)(&val), sizeof(T), 1, f);
+}*/
+
 void exec()
 {
    vector<pair<boost::filesystem::path, boost::filesystem::path> > learningData; //first - train, second - test
-   boost::filesystem::path featuresData("D:/Files/code/sandbox/Decision tree/stepan_csv/stepan_csv.csv");
+   //boost::filesystem::path featuresData("D:/Files/code/sandbox/Decision tree/stepan_csv/stepan_csv.csv");
    //boost::filesystem::path featuresData("D:/Files/code/sandbox/Decision tree/stepan_csv/stepan_example.csv");
+   boost::filesystem::path featuresData("D:/Files/code/sandbox/Decision tree/stepan_csv/stepan_csv.bin");
    boost::filesystem::path predData("D:/Files/code/sandbox/Decision tree/targetgen_full_hmr_pred");
    boost::filesystem::path tempDirectory("D:/Files/code/sandbox/Decision tree/temp_trees_directory");
 
@@ -48,7 +89,7 @@ void exec()
    {
       LOG << "Begin read \'CompoundRecord\' from file \'" + featuresData.generic_string() + "\'";
       int skip = 0;
-      BOOST_FOREACH(const CompoundRecordOptional& opRec, IteratorStaticLib::getCompoundRecordReader(featuresData.generic_string())->get_RecordRange())
+      /*BOOST_FOREACH(const CompoundRecordOptional& opRec, IteratorStaticLib::getCompoundRecordReader(featuresData.generic_string())->get_RecordRange())
       {
          if (opRec)
          {
@@ -58,14 +99,64 @@ void exec()
          {
             ++skip;
          }
+      }*/
+      //FILE* f = fopen(featuresData.generic_string().c_str(), "rb");
+      fstream fin(featuresData.generic_string(), std::ios::binary | std::ios::in);
+      size_t count;
+      inAsByte(fin, count);
+      for (int i = 0; i < count; ++i)
+      {
+         CompoundRecord rec;
+         size_t strLen;
+         inAsByte(fin, strLen);
+         string id;  
+         for (int j = 0; j < strLen; ++j)
+         {
+            char s;
+            inAsByte(fin, s);
+            id.push_back(s);
+         }
+         rec._compoundId = id;
+         size_t countFt;
+         inAsByte(fin, countFt);
+         rec._features.reserve(countFt);
+         for (int j = 0; j < countFt; ++j)
+         {
+            uint32_t ft;
+            inAsByte(fin, ft);
+            rec._features.push_back(ft);
+         }
+         mapFeaturesData.insert(pair<string, CompoundRecord>(id, rec));
       }
+      //fclose(f);
+      fin.close();
       LOG << "Done." << endl << "skip: " << skip << endl << "total: " << skip + mapFeaturesData.size();
    }
    else
    {
       THROWEXCEPTION("Error", "No such file \'" + featuresData.generic_string() + "\'");
    }
-
+   //
+   //translate mapFeaturesData to binaryformat
+  /* {
+      fstream fout((featuresData.parent_path() / "stepan_csv.bin").generic_string(), std::ios::binary | std::ios::out);
+      outAsByte(fout, mapFeaturesData.size());
+      map<string, CompoundRecord>::iterator itr = mapFeaturesData.begin();
+      while (itr != mapFeaturesData.end())
+      {
+         outAsByte(fout, itr->first.length());
+         for (int i = 0; i < itr->first.length(); ++i)
+            outAsByte(fout, itr->first[i]);
+         outAsByte(fout, itr->second._features.size());
+         for (int i = 0; i < itr->second._features.size(); ++i)
+            outAsByte(fout, itr->second._features[i]);
+         ++itr;
+      }
+      fout.close();
+   }
+   return;*/
+   //
+   //TODO: you are stopping here. debug your trainRandomForest!!!
    LOG << "**Clear temp directory or create it**";
    if (boost::filesystem::exists(tempDirectory))
    {
@@ -222,7 +313,7 @@ void exec()
                         testedTargets.second.push_back(rec);
                      }
                   }
-                  LOG << "Done." << endl << "Erased: " << skip << endl << "Left: " << testedTargets.first.size();
+                  LOG << "Done." << endl << "Erased: " << skip << endl << "Left: " << testedTargets.second.size();
                }
                //calc features
                pair<vector<Item>, vector<Item> > items;
@@ -266,11 +357,12 @@ void exec()
                trainRandomForest(forest, items.first, items.second);
                LOG << "Done.";
                LOG << "Write forest binary data \'" + (itr->first) + "\'";
-               vector<uint8_t> bin = forest.serialize();
+               vector<uint8_t> bin;
+               forest.serialize(bin);
                boost::filesystem::path forestPath = setPath / itr->first;
                fstream fout(forestPath.generic_string(), std::ios::binary | std::ios::out);
                for (int i = 0; i < bin.size(); ++i)
-                  fout << bin[i];
+                  fout.write((char*)(&bin[i]), sizeof(uint8_t));
                fout.close();
                LOG << "Done.";
             }
@@ -323,7 +415,9 @@ int main()
          ++n;
       }
       cout << endl;
-   }*/
+   }
+   vector <uint8_t> ser;
+   forest.serialize(ser);*/
    /*FileListReaderPtr ls = IteratorStaticLib::getFileListReader("D:/Files/code/sandbox/Decision tree/targetgen_full_hmr_test_1-0");
    BOOST_FOREACH(const boost::filesystem::path& pth, ls->get_Range())
    {

@@ -47,3 +47,4 @@ http://alglib.sources.ru/dataanalysis/decisionforest.php (CP1251)
 git how to
 http://tproger.ru/translations/most-common-git-screwupsquestions-and-solutions/
 https://github.com/maxim-oleinik/symfony-dev-rules/blob/master/git-cheat-sheet.txt
+https://github.com/qw3rtman/gg

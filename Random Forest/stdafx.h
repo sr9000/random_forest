@@ -39,6 +39,7 @@
 #include <queue>
 #include <stdexcept>
 #include <stdint.h>
+#include <cstdio>
 #include <streambuf>
 #include <string>
 #include <typeinfo>

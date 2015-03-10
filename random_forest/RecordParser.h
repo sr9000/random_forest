@@ -77,7 +77,7 @@ struct RawRecordParser<TargetRecordOptional>
       try
       {
          rec._compoundId = partsOfStringTargetRecord[0];
-         rec._target = boost::lexical_cast<uint8_t>(partsOfStringTargetRecord[1]);
+         rec._target = (uint8_t)(boost::lexical_cast<int>(partsOfStringTargetRecord[1]));
       }
       catch(const CompoundIdException&)
       {
