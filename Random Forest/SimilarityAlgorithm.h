@@ -6,11 +6,11 @@ template <typename T>
 double jaccardCoefficient(const std::vector<T>& f, const std::vector<T>& s)
 {
    int c = 0;
-   BOOST_FOREACH(const T& ff, f)
+   for (int i = 0; i < f.size(); ++i)//for
    {
-      BOOST_FOREACH(const T& ss, s)
+      for (int j = 0; j < s.size(); ++j)//for
       {
-         if (ss == ff)
+         if (f[i] == s[j])
          {
             ++c;
             break;

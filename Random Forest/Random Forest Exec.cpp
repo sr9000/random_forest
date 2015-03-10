@@ -75,6 +75,11 @@ void exec()
 
    learningData.push_back(
       pair<boost::filesystem::path, boost::filesystem::path>(
+         boost::filesystem::path("D:/Files/code/sandbox/Decision tree/My_train1"),
+         boost::filesystem::path("D:/Files/code/sandbox/Decision tree/My_test1")));
+
+   learningData.push_back(
+      pair<boost::filesystem::path, boost::filesystem::path>(
          boost::filesystem::path("D:/Files/code/sandbox/Decision tree/targetgen_full_hmr_train_1-0"),
          boost::filesystem::path("D:/Files/code/sandbox/Decision tree/targetgen_full_hmr_test_1-0")));
 
@@ -109,24 +114,25 @@ void exec()
          CompoundRecord rec;
          size_t strLen;
          inAsByte(fin, strLen);
-         string id;  
+         string id;
+         id.resize(strLen);
          for (int j = 0; j < strLen; ++j)
          {
             char s;
             inAsByte(fin, s);
-            id.push_back(s);
+            id[j] = s;
          }
          rec._compoundId = id;
          size_t countFt;
          inAsByte(fin, countFt);
-         rec._features.reserve(countFt);
+         rec._features.resize(countFt);
          for (int j = 0; j < countFt; ++j)
          {
             uint32_t ft;
             inAsByte(fin, ft);
-            rec._features.push_back(ft);
+            rec._features[j] = ft;
          }
-         mapFeaturesData.insert(pair<string, CompoundRecord>(id, rec));
+         mapFeaturesData.insert(pair<string, CompoundRecord>(rec._compoundId.to_string(), rec));
       }
       //fclose(f);
       fin.close();
@@ -316,39 +322,67 @@ void exec()
                   LOG << "Done." << endl << "Erased: " << skip << endl << "Left: " << testedTargets.second.size();
                }
                //calc features
-               pair<vector<Item>, vector<Item> > items;
+               pair<vector<Item>, vector<Item> > items(vector<Item>(testedTargets.first.size()), vector<Item>(testedTargets.second.size()));
+               for (int i = 0; i < testedTargets.first.size(); ++i)
+                  items.first[i]._features.resize(testedTargets.first.size());
+               for (int i = 0; i < testedTargets.second.size(); ++i)
+                  items.second[i]._features.resize(testedTargets.first.size());
 
                LOG << "Calc features for train data";
-               BOOST_FOREACH(const TargetRecord& rec, testedTargets.first)
+               for (int i = 0; i < testedTargets.first.size(); ++i)//BOOST_FOREACH(const TargetRecord& rec, testedTargets.first)
                {
-                  map<string, CompoundRecord>::const_iterator itr1 = mapFeaturesData.find(rec._compoundId.to_string());
-                  Item item;
-                  item._class = rec._target;
-                  int n = 0;
-                  BOOST_FOREACH(const TargetRecord& ft, testedTargets.first)
+                  map<string, CompoundRecord>::const_iterator itr1 = mapFeaturesData.find(testedTargets.first[i]._compoundId.to_string());
+                  //Item item;
+                  Item& itemI = items.first[i];
+                  itemI._class = testedTargets.first[i]._target;
+                  //int n = 0;//reserve, diag
+                  for (int j = i; j < testedTargets.first.size(); ++j)//BOOST_FOREACH(const TargetRecord& ft, testedTargets.first)
                   {
-                     map<string, CompoundRecord>::const_iterator itr2 = mapFeaturesData.find(ft._compoundId.to_string());
-                     item._features.push_back(Feature(n, jaccardCoefficient(itr1->second._features, itr2->second._features)));
-                     ++n;
+                     Feature& itemJFeatureI = items.first[j]._features[i];
+                     Feature& itemIFeatureJ = itemI._features[j];
+
+                     map<string, CompoundRecord>::const_iterator itr2 = mapFeaturesData.find(testedTargets.first[j]._compoundId.to_string());//to_string -> int
+                     if (i == j)
+                     {
+                        //itemI._features[i] = Feature(i, 1.0);
+                        itemIFeatureJ._number = i;// = Feature(j, l);
+                        itemIFeatureJ._value = 1.0;
+                        //itemJ._features[i] = Feature(i, l);
+                     }
+                     else
+                     {
+                        
+
+                        double l = jaccardCoefficient(itr1->second._features, itr2->second._features);
+                        itemIFeatureJ._number = j;// = Feature(j, l);
+                        itemIFeatureJ._value = l;
+                        itemJFeatureI._number = i;// = Feature(j, l);
+                        itemJFeatureI._value = l;
+                        //itemJ._features[i] = Feature(i, l);
+                     }
+                     //++n;
                   }
-                  items.first.push_back(item);
+                  //items.first.push_back(item);
                }
                LOG << "Done.";
 
                LOG << "Calc features for test data";
-               BOOST_FOREACH(const TargetRecord& rec, testedTargets.second)
+               for (int i = 0; i < testedTargets.second.size(); ++i)//BOOST_FOREACH(const TargetRecord& rec, testedTargets.second)
                {
-                  map<string, CompoundRecord>::const_iterator itr1 = mapFeaturesData.find(rec._compoundId.to_string());
-                  Item item;
-                  item._class = rec._target;
-                  int n = 0;
-                  BOOST_FOREACH(const TargetRecord& ft, testedTargets.first)
+                  map<string, CompoundRecord>::const_iterator itr1 = mapFeaturesData.find(testedTargets.second[i]._compoundId.to_string());
+                  //Item item;
+                  Item& itemI = items.second[i];
+                  itemI._class = testedTargets.second[i]._target;
+                  //int n = 0;//reserve
+                  for (int j = 0; j < testedTargets.first.size(); ++j)//BOOST_FOREACH(const TargetRecord& ft, testedTargets.first)
                   {
-                     map<string, CompoundRecord>::const_iterator itr2 = mapFeaturesData.find(ft._compoundId.to_string());
-                     item._features.push_back(Feature(n, jaccardCoefficient(itr1->second._features, itr2->second._features)));
-                     ++n;
+                     Feature& itemIFeatureJ = itemI._features[j];
+                     map<string, CompoundRecord>::const_iterator itr2 = mapFeaturesData.find(testedTargets.first[j]._compoundId.to_string());
+                     itemIFeatureJ._number = j;
+                     itemIFeatureJ._value = jaccardCoefficient(itr1->second._features, itr2->second._features);
+                     //++n;
                   }
-                  items.second.push_back(item);
+                  //items.second.push_back(item);
                }
                LOG << "Done.";
                //train forest

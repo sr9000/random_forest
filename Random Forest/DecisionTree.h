@@ -11,7 +11,8 @@ public:
 
    Feature(){};
 
-   Feature(int number, double value):_number(number), _value(value){};
+   Feature(int number, double value)
+      :_number(number), _value(value){};
    
    inline bool predicate(const double value) const
    {
@@ -43,19 +44,30 @@ struct DecisionTree
    {
       struct ControlFooting
       {
-         std::vector<const Item*> _set;
+         Item const** _set;
          
          double _cashSetEntropy;
 
          double _cashDeltaEntropy;
          
-         std::vector<bool> _cashSetPredict[2];
+         //bool* _cashSetPredict[2];
 
          double _cashTrueSetPredictEntropy;
 
          double _cashFalseSetPredictEntropy;
          
-         int _bestPredict; //(-1) - no best predict, 0 - _cashSetPredict[0], 1 - _cashSetPredict[1]
+         //int _bestPredict; //(-1) - no best predict, 0 - _cashSetPredict[0], 1 - _cashSetPredict[1]
+
+         int _cashTX;
+
+         int _cashSize;
+
+         ~ControlFooting()
+         {
+            //delete[] _cashSetPredict[0];
+            //delete[] _cashSetPredict[1];
+            delete[] _set;
+         }
          
       };
       

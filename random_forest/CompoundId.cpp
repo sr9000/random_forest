@@ -13,6 +13,7 @@ CompoundId::CompoundId(const string& full_compound)
       _inchiCore = partsOfStringCompoundId[0];
       _inchiStereo = partsOfStringCompoundId[1];
       _inchiChecksum = partsOfStringCompoundId[2];
+      _fullString = _inchiCore + "-" + _inchiStereo + "-" + _inchiChecksum;
    }
    else
    {
@@ -20,9 +21,9 @@ CompoundId::CompoundId(const string& full_compound)
    }
 }
 
-string CompoundId::to_string() const
+const string& CompoundId::to_string() const
 {
-   return _inchiCore + "-" + _inchiStereo + "-" + _inchiChecksum;
+   return _fullString;
 }
 
 CompoundId& CompoundId::operator=(const CompoundId& other)
@@ -30,5 +31,6 @@ CompoundId& CompoundId::operator=(const CompoundId& other)
    _inchiCore = other._inchiCore;
    _inchiStereo = other._inchiStereo;
    _inchiChecksum = other._inchiChecksum;
+   _fullString = other._fullString;
    return *this;
 }
