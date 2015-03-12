@@ -23,7 +23,9 @@ public:
 
 struct Item
 {
-   std::vector<Feature> _features;
+   Feature* _features;
+
+   int _featuresSize;
    
    bool _class; //true - item is belong to class, false - else.
 
@@ -34,6 +36,11 @@ struct Item
    inline bool predicate(const Feature& feature) const
    {
       return _features[feature._number].predicate(feature._value);
+   }
+
+   ~Item()
+   {
+      delete[] _features;
    }
    
 };
@@ -61,6 +68,9 @@ struct DecisionTree
          int _cashTX;
 
          int _cashSize;
+
+         ControlFooting()
+            : _set(0) {}
 
          ~ControlFooting()
          {

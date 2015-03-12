@@ -11,6 +11,7 @@
 #include <boost/date_time/date_clock_device.hpp>
 #include <boost/tuple/tuple.hpp>
 #include <tbb/pipeline.h>
+#include <tbb/task_scheduler_init.h>
 
 #include <algorithm>
 #include <boost/algorithm/string.hpp>

@@ -73,11 +73,11 @@ void exec_train()
    boost::filesystem::path predData("D:/Files/code/sandbox/Decision tree/targetgen_full_hmr_pred");
    boost::filesystem::path tempDirectory("D:/Files/code/sandbox/Decision tree/other_temp_trees");
 
-   /*learningData.push_back(
+   learningData.push_back(
       pair<boost::filesystem::path, boost::filesystem::path>(
          boost::filesystem::path("D:/Files/code/sandbox/Decision tree/My_train1"),
          boost::filesystem::path("D:/Files/code/sandbox/Decision tree/My_test1")));
-         */
+         
 
    learningData.push_back(
       pair<boost::filesystem::path, boost::filesystem::path>(
@@ -325,9 +325,15 @@ void exec_train()
                //calc features
                pair<vector<Item>, vector<Item> > items(vector<Item>(testedTargets.first.size()), vector<Item>(testedTargets.second.size()));
                for (int i = 0; i < testedTargets.first.size(); ++i)
-                  items.first[i]._features.resize(testedTargets.first.size());
+               {
+                  items.first[i]._featuresSize = testedTargets.first.size();
+                  items.first[i]._features = new Feature[items.first[i]._featuresSize];//.resize(testedTargets.first.size());
+               }
                for (int i = 0; i < testedTargets.second.size(); ++i)
-                  items.second[i]._features.resize(testedTargets.first.size());
+               {
+                  items.second[i]._featuresSize = testedTargets.first.size();
+                  items.second[i]._features = new Feature[items.second[i]._featuresSize];//.resize(testedTargets.first.size());
+               }
 
                LOG << "Calc features for train data";
                for (int i = 0; i < testedTargets.first.size(); ++i)//BOOST_FOREACH(const TargetRecord& rec, testedTargets.first)
@@ -471,7 +477,7 @@ int main()
    try
    {
       init_log();
-      //exec_train();
+      exec_train();
    }
    catch(const ThrowedException& ex)
    {

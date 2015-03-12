@@ -1,6 +1,7 @@
 #include "stdafx.h"
 
 #include "RandomForest.h"
+#include "ParallelRandomForest.h"
 
 using namespace std;
 
@@ -44,6 +45,27 @@ void trainRandomForest(RandomForest& randomForest, const vector<Item>& trainData
    trainRandomForest(randomForest, ptrTrainData, ptrTestData, seed, mink, maxk);
 }
 
+TrainData* VectorTreesIterator::operator()(tbb::flow_control& fc) const
+{
+   if (_itr == _end)
+   {
+      fc.stop();
+      return 0;
+   }
+   cout << (_end - _itr) << endl;
+   TrainData* ret = new TrainData(*_itr, *_itrSubsets, *_itrSubfeatures);
+   ++_itr;
+   ++_itrSubsets;
+   ++_itrSubfeatures;
+   return ret;//возвращаем указатель(DecisionTree*) на значение, которое получаем, разыменовав итератор. Возвращаем полученный указатель, а итератор смещаем к следующему элементу коллекции.
+}
+
+void TrainDecisionTree::operator()(TrainData* ptr) const
+{
+   trainDecisionTree(*(ptr->_tree), *(ptr->_trainData), *(ptr->_numberOfUsedFeatures));
+   delete ptr;
+}
+
 void trainRandomForest(RandomForest& randomForest, const vector<const Item*>& trainData, const vector<const Item*>& testData, uint32_t seed, int mink, int maxk) //because 42 is answer to life the universe and everything!
 {
    //validate train data
@@ -60,7 +82,7 @@ void trainRandomForest(RandomForest& randomForest, const vector<const Item*>& tr
       --mink;
       --maxk;
    }
-   int M = trainData[0]->_features.size();
+   int M = trainData[0]->_featuresSize;
    int m = (int)floor(sqrt((double)M));
    //generate subsets
    vector<vector<const Item*> > subset(maxk,vector<const Item*>());
@@ -82,8 +104,7 @@ void trainRandomForest(RandomForest& randomForest, const vector<const Item*>& tr
    }
    //create trees and calc tests predict
    randomForest._forest.resize(maxk);
-   vector <vector<double> > tests(testData.size(), vector<double>(1,0));
-   for (int k = 0; k <= mink; ++k)
+    /*for (int k = 0; k <= mink; ++k)
    {
       cout << k << "/" << maxk << endl;
       trainDecisionTree(randomForest._forest[k], subset[k], subfeature[k]);
@@ -97,6 +118,29 @@ void trainRandomForest(RandomForest& randomForest, const vector<const Item*>& tr
    {
       cout << k << "/" << maxk << endl;
       trainDecisionTree(randomForest._forest[k], subset[k], subfeature[k]);
+      DecisionTree &tree = randomForest._forest[k];
+      for (int i = 0; i < testData.size(); ++i)
+      {
+         tests[i].push_back(tree.getClassTrueProbability(*testData[i]));
+         tests[i][k - mink] += tests[i][k - 1 - mink];
+      }
+   }*/
+   vector <vector<double> > tests(testData.size(), vector<double>(1,0));
+   tbb::filter_t<void, TrainData*> iterator = tbb::make_filter<void, TrainData*>(tbb::filter::serial_in_order, VectorTreesIterator(randomForest._forest, subset, subfeature));
+   tbb::filter_t<TrainData*, void> calculator = tbb::make_filter<TrainData*, void>(tbb::filter::parallel, TrainDecisionTree());
+   tbb::filter_t <void, void> trainProcess = iterator & calculator;
+   parallel_pipeline(tbb::task_scheduler_init::default_num_threads(), trainProcess);
+   cout << "Success train!\n";
+   for (int k = 0; k <= mink; ++k)
+   {
+      DecisionTree &tree = randomForest._forest[k];
+      for (int i = 0; i < testData.size(); ++i)
+      {
+         tests[i][0] += tree.getClassTrueProbability(*testData[i]);
+      }
+   }
+   for (int k = mink + 1; k < maxk; ++k)
+   {
       DecisionTree &tree = randomForest._forest[k];
       for (int i = 0; i < testData.size(); ++i)
       {

@@ -123,7 +123,8 @@ void splitNode(DecisionTree::Node& node, const vector<int>& numberOfUsedFeatures
          {
             //node._controlFooting->_cashSetPredict[nPredict][k] = node._controlFooting->_set[k]->predicate(feature);
             //node._controlFooting->_cashSetPredict[nPredict][k] = node._controlFooting->_set[k]->_features[feature._number]._value < feature._value;
-            const vector<Feature>& vFt = node._controlFooting->_set[k]->_features;
+            //const vector<Feature>& vFt = node._controlFooting->_set[k]->_features;
+            const Feature* vFt = node._controlFooting->_set[k]->_features;
             const Feature& ft = vFt[feature._number];
             if ( ft._value < feature._value)//(node._controlFooting->_cashSetPredict[nPredict][k])
             {
@@ -174,7 +175,7 @@ void trainDecisionTree(DecisionTree& decisionTree, const vector<const Item*>& tr
    decisionTree._controlFooting = new DecisionTree::ControlFooting();
    if (numberOfUsedFeatures.empty())
    {
-      for (int i = 0; i < trainData.front()->_features.size(); ++i)
+      for (int i = 0; i < trainData.front()->_featuresSize; ++i)
          decisionTree._controlFooting->_numberOfUsedFeatures.push_back(i);
    }
    else
