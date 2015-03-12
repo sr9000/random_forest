@@ -19,6 +19,16 @@ const void RandomForest::serialize(vector<uint8_t>& v) const
    //return res;
 }
 
+void RandomForest::deserialize(vector<uint8_t>& v)
+{
+   vector<uint8_t>::iterator itr = v.begin();
+   clear();
+   while (itr != v.end())
+   {
+
+   }
+}
+
 void trainRandomForest(RandomForest& randomForest, const vector<Item>& trainData, const vector<Item>& testData, uint32_t seed, int mink, int maxk) //because 42 is answer to life the universe and everything!
 {
    vector<const Item*> ptrTrainData;
@@ -75,6 +85,7 @@ void trainRandomForest(RandomForest& randomForest, const vector<const Item*>& tr
    vector <vector<double> > tests(testData.size(), vector<double>(1,0));
    for (int k = 0; k <= mink; ++k)
    {
+      cout << k << "/" << maxk << endl;
       trainDecisionTree(randomForest._forest[k], subset[k], subfeature[k]);
       DecisionTree &tree = randomForest._forest[k];
       for (int i = 0; i < testData.size(); ++i)
@@ -84,6 +95,7 @@ void trainRandomForest(RandomForest& randomForest, const vector<const Item*>& tr
    }
    for (int k = mink + 1; k < maxk; ++k)
    {
+      cout << k << "/" << maxk << endl;
       trainDecisionTree(randomForest._forest[k], subset[k], subfeature[k]);
       DecisionTree &tree = randomForest._forest[k];
       for (int i = 0; i < testData.size(); ++i)

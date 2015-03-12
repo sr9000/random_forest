@@ -29,6 +29,8 @@ struct RandomForest
 
    const void serialize(std::vector<uint8_t>&) const;
 
+   void deserialize(std::vector<uint8_t>&);
+
    friend void trainRandomForest(RandomForest& randomForest, const std::vector<Item>& trainData, const std::vector<Item>& testData, uint32_t seed, int mink, int maxk);
 
    friend void trainRandomForest(RandomForest& randomForest, const std::vector<const Item*>& trainData, const std::vector<const Item*>& testData, uint32_t seed, int mink, int maxk);

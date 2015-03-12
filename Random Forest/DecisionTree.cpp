@@ -59,9 +59,36 @@ void DecisionTree::Node::serialize(vector<uint8_t>& v) const
    }
 }
 
+void DecisionTree::Node::deserialize(std::vector<uint8_t>::iterator& itr)
+{
+   const uint8_t finishRoot = 0;
+   const uint8_t predicateRoot = 1;
+   if (*itr == predicateRoot)
+   {
+      _predictNode = true;
+      for (int i = 0; i < sizeof(Feature); ++i, ++itr)
+         ((uint8_t*)&_predicateFeature)[i] = *itr;
+      _trueChild = new DecisionTree::Node();
+      _trueChild->deserialize(itr);
+      _falseChild = new DecisionTree::Node();
+      _falseChild->deserialize(itr);
+   }
+   else
+   {
+      _predictNode = false;
+      for (int i = 0; i < sizeof(double); ++i, ++itr)
+         ((uint8_t*)&_classTrueProbability)[i] = *itr;
+   }
+}
+
 void DecisionTree::serialize(vector<uint8_t>& v) const
 {
    _root.serialize(v);
+}
+
+void DecisionTree::deserialize(vector<uint8_t>::iterator& itr)
+{
+   _root.deserialize(itr);
 }
 
 inline double entropy(int t, int n)
@@ -96,7 +123,9 @@ void splitNode(DecisionTree::Node& node, const vector<int>& numberOfUsedFeatures
          {
             //node._controlFooting->_cashSetPredict[nPredict][k] = node._controlFooting->_set[k]->predicate(feature);
             //node._controlFooting->_cashSetPredict[nPredict][k] = node._controlFooting->_set[k]->_features[feature._number]._value < feature._value;
-            if ( node._controlFooting->_set[k]->_features[feature._number]._value < feature._value)//(node._controlFooting->_cashSetPredict[nPredict][k])
+            const vector<Feature>& vFt = node._controlFooting->_set[k]->_features;
+            const Feature& ft = vFt[feature._number];
+            if ( ft._value < feature._value)//(node._controlFooting->_cashSetPredict[nPredict][k])
             {
                ++TX;
                if (node._controlFooting->_set[k]->_class)

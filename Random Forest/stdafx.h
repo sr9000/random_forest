@@ -9,6 +9,8 @@
 
 #include <boost/date_time/posix_time/posix_time.hpp> //no i/o just types
 #include <boost/date_time/date_clock_device.hpp>
+#include <boost/tuple/tuple.hpp>
+#include <tbb/pipeline.h>
 
 #include <algorithm>
 #include <boost/algorithm/string.hpp>

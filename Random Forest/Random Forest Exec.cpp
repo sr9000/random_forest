@@ -64,19 +64,20 @@ inline void inAsByte(FILE* f, T& val)
    fread((void*)(&val), sizeof(T), 1, f);
 }*/
 
-void exec()
+void exec_train()
 {
    vector<pair<boost::filesystem::path, boost::filesystem::path> > learningData; //first - train, second - test
    //boost::filesystem::path featuresData("D:/Files/code/sandbox/Decision tree/stepan_csv/stepan_csv.csv");
    //boost::filesystem::path featuresData("D:/Files/code/sandbox/Decision tree/stepan_csv/stepan_example.csv");
    boost::filesystem::path featuresData("D:/Files/code/sandbox/Decision tree/stepan_csv/stepan_csv.bin");
    boost::filesystem::path predData("D:/Files/code/sandbox/Decision tree/targetgen_full_hmr_pred");
-   boost::filesystem::path tempDirectory("D:/Files/code/sandbox/Decision tree/temp_trees_directory");
+   boost::filesystem::path tempDirectory("D:/Files/code/sandbox/Decision tree/other_temp_trees");
 
-   learningData.push_back(
+   /*learningData.push_back(
       pair<boost::filesystem::path, boost::filesystem::path>(
          boost::filesystem::path("D:/Files/code/sandbox/Decision tree/My_train1"),
          boost::filesystem::path("D:/Files/code/sandbox/Decision tree/My_test1")));
+         */
 
    learningData.push_back(
       pair<boost::filesystem::path, boost::filesystem::path>(
@@ -388,7 +389,7 @@ void exec()
                //train forest
                LOG << "Train Forest";
                RandomForest forest;
-               trainRandomForest(forest, items.first, items.second);
+               trainRandomForest(forest, items.first, items.second, 42, 1, 100);
                LOG << "Done.";
                LOG << "Write forest binary data \'" + (itr->first) + "\'";
                vector<uint8_t> bin;
@@ -413,6 +414,16 @@ void exec()
    }
 
    return;
+}
+
+void exec_maketrashold()
+{
+   //first - path to forests, 
+   //second - path to train set,
+   //third - path to test set,
+   vector<boost::tuples::tuple<boost::filesystem::path, boost::filesystem::path, boost::filesystem::path> > learningData; 
+   boost::filesystem::path featuresData("D:/Files/code/sandbox/Decision tree/stepan_csv/stepan_csv.bin");
+   boost::filesystem::path tempDirectory("D:/Files/code/sandbox/Decision tree/temp_trees_directory/Set_1");
 }
 
 int main()
@@ -460,7 +471,7 @@ int main()
    try
    {
       init_log();
-      exec();
+      //exec_train();
    }
    catch(const ThrowedException& ex)
    {

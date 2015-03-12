@@ -95,6 +95,8 @@ struct DecisionTree
       void clear();
 
       void serialize(std::vector<uint8_t>& v) const;
+
+      void deserialize(std::vector<uint8_t>::iterator& itr);
       
    };
    
@@ -131,6 +133,8 @@ struct DecisionTree
    void clear();
 
    void serialize(std::vector<uint8_t>&) const;
+
+   void deserialize(std::vector<uint8_t>::iterator&);
    
 };
 
