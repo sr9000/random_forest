@@ -5,6 +5,7 @@
 #include "TemplateParser.h"
 #include "CompoundRecord.h"
 #include "TargetRecord.h"
+#include "PredRecord.h"
 
 template<>
 struct RawRecordParser<CompoundRecordOptional>
@@ -98,5 +99,45 @@ struct FormatHintRawRecordParser<FileFormat::EndOfLineSeparator, TargetRecordOpt
    static void parse(TargetRecordOptional& opRec, const std::string& str)
    {
       RawRecordParser<TargetRecordOptional>::parse(opRec, str);
+   }
+};
+
+template<>
+struct RawRecordParser<PredRecordOptional>
+{
+   static void parse(PredRecordOptional& opRec, const std::string& str)
+   {
+      PredRecord rec;
+      
+      opRec.reset();
+      
+      std::vector<std::string> partsOfStringTargetRecord;
+      boost::split(partsOfStringTargetRecord, str, boost::is_any_of(" "));
+      if (partsOfStringTargetRecord.size() < 1)
+         return;
+      
+      try
+      {
+         rec._compoundId = partsOfStringTargetRecord[0];
+      }
+      catch(const CompoundIdException&)
+      {
+         return;
+      }
+      catch(const boost::bad_lexical_cast &)
+      {
+         return;
+      }
+      
+      opRec = rec;
+   }
+};
+
+template<>
+struct FormatHintRawRecordParser<FileFormat::EndOfLineSeparator, PredRecordOptional>
+{
+   static void parse(PredRecordOptional& opRec, const std::string& str)
+   {
+      RawRecordParser<PredRecordOptional>::parse(opRec, str);
    }
 };

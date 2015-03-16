@@ -22,6 +22,15 @@ namespace IteratorStaticLib
       return RecordReaderFactory<CompoundRecordOptional>::createRecordReader(conf);
    }
 
+   IRecordReader<PredRecordOptional>::RecordReaderPtr getPredRecordReader(const std::string& path)
+   {
+      RecordReaderCreationConfig conf;
+      conf.set_Type(RecordReaderFactoryType::TextFile);
+      conf.set_Path(boost::filesystem::path(path));
+      conf.set_FileFormat(FileFormat::EndOfLineSeparator);
+      return RecordReaderFactory<PredRecordOptional>::createRecordReader(conf);
+   }
+
    FileListReaderPtr getFileListReader(const std::string& path)
    {
       FileListReaderCreationConfig conf;

@@ -15,6 +15,8 @@ namespace IteratorStaticLib
 
    IRecordReader<CompoundRecordOptional>::RecordReaderPtr getCompoundRecordReader(const std::string& path);
 
+   IRecordReader<PredRecordOptional>::RecordReaderPtr getPredRecordReader(const std::string& path);
+
    FileListReaderPtr getFileListReader(const std::string& path);
 
 }

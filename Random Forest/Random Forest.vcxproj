@@ -166,6 +166,7 @@
     <ClCompile Include="DecisionTree.cpp" />
     <ClCompile Include="Random Forest Exec.cpp" />
     <ClCompile Include="RandomForest.cpp" />
+    <ClCompile Include="RandomForestThreshold.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\random_forest\random_forest.vcxproj">

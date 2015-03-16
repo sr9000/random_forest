@@ -163,6 +163,7 @@
     <ClInclude Include="FileListReader.h" />
     <ClInclude Include="FileListReaderFactory.h" />
     <ClInclude Include="IteratorStaticLib.h" />
+    <ClInclude Include="PredRecord.h" />
     <ClInclude Include="RecordParser.h" />
     <ClInclude Include="ITextRecordIterator.h" />
     <ClInclude Include="TargetRecord.h" />

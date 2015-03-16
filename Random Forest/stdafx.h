@@ -7,15 +7,11 @@
 
 #define BOOST_LIB_DIAGNOSTIC
 
-#include <boost/date_time/posix_time/posix_time.hpp> //no i/o just types
-#include <boost/date_time/date_clock_device.hpp>
-#include <boost/tuple/tuple.hpp>
-#include <tbb/pipeline.h>
-#include <tbb/task_scheduler_init.h>
-
 #include <algorithm>
 #include <boost/algorithm/string.hpp>
 #include <boost/algorithm/string/trim.hpp>
+#include <boost/date_time/date_clock_device.hpp>
+#include <boost/date_time/posix_time/posix_time.hpp> //no i/o just types
 #include <boost/filesystem/operations.hpp>
 #include <boost/filesystem/path.hpp>
 #include <boost/foreach.hpp>
@@ -35,6 +31,8 @@
 #include <boost/range/any_range.hpp>
 #include <boost/shared_ptr.hpp>
 #include <boost/system/config.hpp>
+#include <boost/tuple/tuple.hpp>
+#include <cstdio>
 #include <fstream>
 #include <iostream>
 #include <istream>
@@ -42,8 +40,9 @@
 #include <queue>
 #include <stdexcept>
 #include <stdint.h>
-#include <cstdio>
 #include <streambuf>
 #include <string>
+#include <tbb/pipeline.h>
+#include <tbb/task_scheduler_init.h>
 #include <typeinfo>
 #include <vector>

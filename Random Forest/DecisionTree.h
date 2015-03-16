@@ -89,11 +89,11 @@ struct DecisionTree
       
       Feature _predicateFeature;
       
-      Node* _trueChild;
+      boost::shared_ptr<Node> _trueChild;
       
-      Node* _falseChild;
+      boost::shared_ptr<Node> _falseChild;
 
-      Node():_trueChild(0), _falseChild(0), _controlFooting(0){};
+      Node():_controlFooting(0){};
 
       ~Node()
       {

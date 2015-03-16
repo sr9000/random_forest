@@ -31,12 +31,12 @@ void DecisionTree::clear()
 
 void DecisionTree::Node::clear()
 {
-   if (_trueChild)
+   /*if (_trueChild)
       delete _trueChild;
    if (_falseChild)
       delete _falseChild;
    _trueChild = 0;
-   _falseChild = 0;
+   _falseChild = 0;*/
 }
 
 void DecisionTree::Node::serialize(vector<uint8_t>& v) const
@@ -66,15 +66,17 @@ void DecisionTree::Node::deserialize(std::vector<uint8_t>::iterator& itr)
    if (*itr == predicateRoot)
    {
       _predictNode = true;
+      ++itr;
       for (int i = 0; i < sizeof(Feature); ++i, ++itr)
          ((uint8_t*)&_predicateFeature)[i] = *itr;
-      _trueChild = new DecisionTree::Node();
+      _trueChild = boost::shared_ptr<DecisionTree::Node>(new DecisionTree::Node());
       _trueChild->deserialize(itr);
-      _falseChild = new DecisionTree::Node();
+      _falseChild = boost::shared_ptr<DecisionTree::Node>(new DecisionTree::Node());
       _falseChild->deserialize(itr);
    }
    else
    {
+      ++itr;
       _predictNode = false;
       for (int i = 0; i < sizeof(double); ++i, ++itr)
          ((uint8_t*)&_classTrueProbability)[i] = *itr;
@@ -206,14 +208,14 @@ void trainDecisionTree(DecisionTree& decisionTree, const vector<const Item*>& tr
       {
          bestNode._predictNode = true;
          //fill true child
-         bestNode._trueChild = new DecisionTree::Node();
-         decisionTree._controlFooting->_trueNode = bestNode._trueChild;
+         bestNode._trueChild = boost::shared_ptr<DecisionTree::Node>(new DecisionTree::Node());
+         decisionTree._controlFooting->_trueNode = &*bestNode._trueChild;
          DecisionTree::Node& tchild = *(decisionTree._controlFooting->_trueNode);
          tchild._controlFooting = new DecisionTree::Node::ControlFooting();
          tchild._controlFooting->_cashSetEntropy = bestNode._controlFooting->_cashTrueSetPredictEntropy;
          //fill false child
-         bestNode._falseChild = new DecisionTree::Node();
-         decisionTree._controlFooting->_falseNode = bestNode._falseChild;
+         bestNode._falseChild = boost::shared_ptr<DecisionTree::Node>(new DecisionTree::Node());
+         decisionTree._controlFooting->_falseNode = &*bestNode._falseChild;
          DecisionTree::Node& fchild = *(decisionTree._controlFooting->_falseNode);
          fchild._controlFooting = new DecisionTree::Node::ControlFooting();
          fchild._controlFooting->_cashSetEntropy = bestNode._controlFooting->_cashFalseSetPredictEntropy;

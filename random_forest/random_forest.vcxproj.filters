@@ -92,5 +92,8 @@
     <ClInclude Include="FileListReader.h">
       <Filter>Header Files\reader</Filter>
     </ClInclude>
+    <ClInclude Include="PredRecord.h">
+      <Filter>Header Files\record</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

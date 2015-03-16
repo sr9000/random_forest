@@ -26,7 +26,8 @@ void RandomForest::deserialize(vector<uint8_t>& v)
    clear();
    while (itr != v.end())
    {
-
+      _forest.push_back(DecisionTree());
+      _forest[_forest.size() - 1].deserialize(itr);
    }
 }
 
